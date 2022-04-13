@@ -18,5 +18,5 @@ COPY ./nignx.conf /etc/nginx/conf.d
 # 80번 포트 오픔
 EXPOSE 80
  
-# container 실행시 자동으로 실행할 command, ngnix 시작함
+# container 실행시 자 동으로 실행할 command, ngnix 시작함
 CMD ["nginx", "-g", "daemon off;"]
