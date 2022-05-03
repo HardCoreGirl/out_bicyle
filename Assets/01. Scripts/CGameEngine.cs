@@ -4,13 +4,43 @@ using UnityEngine;
 
 public class CGameEngine : MonoBehaviour
 {
+    #region SingleTon
+    public static CGameEngine _instance = null;
+
+    public static CGameEngine Instance
+    {
+        get
+        {
+            if (_instance == null)
+                Debug.Log("CGameEngine install null");
+
+            return _instance;
+        }
+    }
+
+    void Awake()
+    {
+        if (_instance == null)
+            _instance = this;
+    }
+
+    void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            _instance = null;
+        }
+    }
+    #endregion
     // public GameObject m_goPlayer;
 
     public GameObject m_goPlayer;
 
     public GameObject[] m_listPlayer = new GameObject[2];
 
-    private GameObject m_goActivePlayer;
+    public GameObject m_goActivePlayer;
+
+    public GameObject m_goRoadParents;
 
     private Rigidbody2D rb;
 
@@ -19,12 +49,26 @@ public class CGameEngine : MonoBehaviour
     private float m_fPlayerXPoz;
     private Vector3 m_vecCameraPoz;
 
+    private int m_nPlayerPozIndex = 0;
+
     // Start is called before the first frame update
     void Start()
     {
         // rb = m_goPlayer.GetComponent<Rigidbody2D>();
 
         GameStart();
+
+        GetComponent<CObjectManager>().InitObjects();
+
+        for(int i = 0; i <= 15; i++)
+        {
+            GameObject goRoad = Instantiate(Resources.Load("Prefabs/Roads/road01") as GameObject);
+            // m_goRoadParents.transform = goRoad.transform.parent;
+            goRoad.transform.SetParent(m_goRoadParents.transform);
+            goRoad.transform.position = new Vector3(i, 0, 0);
+
+        }
+        
     }
 
     // Update is called once per frame
@@ -35,6 +79,20 @@ public class CGameEngine : MonoBehaviour
             return;
 
         m_fPlayerXPoz = m_goActivePlayer.transform.position.x;
+
+        if( (int)m_fPlayerXPoz > m_nPlayerPozIndex )
+        {
+            m_nPlayerPozIndex = (int)m_fPlayerXPoz;
+            GameObject goRoad = Instantiate(Resources.Load("Prefabs/Roads/road01") as GameObject);
+            // m_goRoadParents.transform = goRoad.transform.parent;
+            goRoad.transform.SetParent(m_goRoadParents.transform);
+            goRoad.transform.position = new Vector3(14 + m_nPlayerPozIndex, 0, 0);
+
+            GetComponent<CObjectManager>().CreateObject(new Vector3(m_nPlayerPozIndex + 14, 1, 0));
+
+            GetComponent<CObjectManager>().HideObject();
+        }
+
         m_vecCameraPoz = Camera.main.transform.position;
         m_vecCameraPoz.x = m_fPlayerXPoz;
         Camera.main.transform.position = m_vecCameraPoz;
@@ -49,6 +107,11 @@ public class CGameEngine : MonoBehaviour
 
         m_listPlayer[nIndex].SetActive(true);
         m_goActivePlayer = m_listPlayer[nIndex];
+    }
+
+    public GameObject GetPlayer()
+    {
+        return m_goActivePlayer;
     }
 
     public void GameStart()

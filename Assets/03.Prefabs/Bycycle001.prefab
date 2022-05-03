@@ -263,8 +263,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1925549624793750826}
   - component: {fileID: 1995767809099456489}
-  - component: {fileID: 124330562}
   - component: {fileID: 5477275639173274223}
+  - component: {fileID: 124330565}
   m_Layer: 0
   m_Name: Bycycle001
   m_TagString: Untagged
@@ -309,27 +309,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!50 &124330562
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1925549624793750821}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!114 &5477275639173274223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,6 +321,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 978306af76590b84d9de265ffa1a4d16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rdRear: {fileID: 706334471}
+--- !u!61 &124330565
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1925549624793750821}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.10516393, y: 0.9768498}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.7345562, y: 1.3616776}
+  m_EdgeRadius: 0
 --- !u!1 &1925549625146470798
 GameObject:
   m_ObjectHideFlags: 0
@@ -867,9 +873,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0030272305, y: 0}
+  m_Offset: {x: -0.00302732, y: -0.0052007437}
   serializedVersion: 2
-  m_Radius: 0.39670047
+  m_Radius: 0.3706966
 --- !u!1 &1925549626258430259
 GameObject:
   m_ObjectHideFlags: 0
@@ -881,6 +887,7 @@ GameObject:
   - component: {fileID: 1925549626258430256}
   - component: {fileID: 1925549626258430257}
   - component: {fileID: 39604878}
+  - component: {fileID: 706334471}
   m_Layer: 0
   m_Name: Wheel_Rear
   m_TagString: Untagged
@@ -968,9 +975,30 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.002837658, y: -0.0058648586}
+  m_Offset: {x: -0.002837658, y: 0.0045366883}
   serializedVersion: 2
-  m_Radius: 0.3295915
+  m_Radius: 0.31918997
+--- !u!50 &706334471
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1925549626258430259}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1925549626303548536
 GameObject:
   m_ObjectHideFlags: 0
