@@ -40,8 +40,12 @@ public class CGameEngine : MonoBehaviour
 
     public GameObject m_goActivePlayer;
 
+    public GameObject m_goBGManager;
+
     public GameObject m_goRoadParents;
 
+
+    private CUIsManager m_uiManager;
     private Rigidbody2D rb;
 
     private int m_nState = 0;
@@ -51,12 +55,21 @@ public class CGameEngine : MonoBehaviour
 
     private int m_nPlayerPozIndex = 0;
 
+    private int m_nHP = 0;
+    private int m_nStarPoint = 0;
+
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("GameStart");
         // rb = m_goPlayer.GetComponent<Rigidbody2D>();
 
-        GameStart();
+        // GameStart();
+
+        CGameData.Instance.InitData();
+
+        m_uiManager = GetComponent<CUIsManager>();
+        m_uiManager.ShowUI(0);
 
         GetComponent<CObjectManager>().InitObjects();
 
@@ -88,14 +101,21 @@ public class CGameEngine : MonoBehaviour
             goRoad.transform.SetParent(m_goRoadParents.transform);
             goRoad.transform.position = new Vector3(14 + m_nPlayerPozIndex, 0, 0);
 
-            GetComponent<CObjectManager>().CreateObject(new Vector3(m_nPlayerPozIndex + 14, 1, 0));
+            GetComponent<CObjectManager>().CreateObject(new Vector3(m_nPlayerPozIndex + 14, 0, 0));
 
             GetComponent<CObjectManager>().HideObject();
+
+            m_goBGManager.GetComponent<CBGManager>().UpdateBG();
         }
 
         m_vecCameraPoz = Camera.main.transform.position;
         m_vecCameraPoz.x = m_fPlayerXPoz;
         Camera.main.transform.position = m_vecCameraPoz;
+    }
+
+    public int GetState()
+    {
+        return m_nState;
     }
 
     public void SetActivePlayer(int nIndex)
@@ -116,8 +136,70 @@ public class CGameEngine : MonoBehaviour
 
     public void GameStart()
     {
+        m_uiManager.ShowUI(1);
+
         SetActivePlayer(0);
+
+        SetHP(3);
+        SetStarPoint(0);
+
+        GetPlayer().GetComponent<CPlayer>().Run();
 
         m_nState = 1;
     }
+
+    public void SetHP(int nHP)
+    {
+        m_nHP = nHP;
+        CUIInGame.Instance.UpdateHP(m_nHP);
+    }
+
+    public int AddHP(int nHP = 1)
+    {
+        m_nHP += nHP;
+        CUIInGame.Instance.UpdateHP(m_nHP);
+        return m_nHP;
+    }
+
+    public int GetHP()
+    {
+        return m_nHP;
+    }
+
+    public void SetStarPoint(int nPoint)
+    {
+        m_nStarPoint = nPoint;
+        CUIInGame.Instance.UpdateStarPoint(m_nStarPoint);
+    }
+
+    public int AddStarPoint(int nPoint = 10)
+    {
+        m_nStarPoint += nPoint;
+        if( m_nStarPoint > 9999)
+            m_nStarPoint = 9999;
+
+        CUIInGame.Instance.UpdateStarPoint(m_nStarPoint);
+        return m_nStarPoint;
+    }
+
+    public int GetStarPoint()
+    {
+        return m_nStarPoint;
+    }
+
+    public int Damage()
+    {
+        m_nHP--;
+        CUIInGame.Instance.UpdateHP(m_nHP);
+
+        if( m_nHP <= 0 )
+        {
+            m_nState = 2;
+            GetPlayer().GetComponent<CPlayer>().GameOver();
+            m_uiManager.ShowPopupGameOver();
+        }
+
+        return m_nHP;
+    }
+
 }

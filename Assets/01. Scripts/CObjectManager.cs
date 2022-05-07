@@ -19,6 +19,9 @@ public class CObjectManager : MonoBehaviour
     public GameObject m_goPuddieParent;
     public GameObject[] m_listPuddie = new GameObject[20];
 
+    private int m_nStarCombo = 0;
+    private int m_nStarHeight = 0;
+
 
     // Start is called before the first frame update
     void Start()
@@ -73,11 +76,46 @@ public class CObjectManager : MonoBehaviour
 
     public void CreateObject(Vector3 vecPoz)
     {
-        int nRandom = Random.Range(0, 10);
+        int nRandomValue = Random.Range(0, CGameData.Instance.GetMaxRate());
+
+        int nObjectIndex = -1;
+        int nTotalRate = 0;
+        int nHeight = 0;
+        Vector3 vecCreatePoz = vecPoz;
+
+        if( m_nStarCombo > 0 )
+        {
+            nObjectIndex = 0;
+            nHeight = m_nStarHeight;
+        } else {
+            for(int i = 0; i < CGameData.Instance.GetRateCnt(); i++)
+            {
+                nTotalRate += CGameData.Instance.GetRate(i);
+                if( nRandomValue < nTotalRate )
+                {
+                    nObjectIndex = i;
+                    break;
+                }
+            }
+
+            if( nObjectIndex < 0 )
+                return;
+            
+            if( nObjectIndex < 3)
+                nHeight = Random.Range(0, 3);
+        }
+
+        vecCreatePoz.y = 1 + ((float)nHeight * 2);
 
         int nActiveIndex = 0;        
-        if( nRandom == 0 )
+        if( nObjectIndex == 0 )
         {
+            if( m_nStarCombo <= 0 )
+            {
+                m_nStarCombo = Random.Range(3, 5);
+                m_nStarHeight = nHeight;
+            }
+
             for(int i = 0; i < m_listStar.Length; i++)
             {
                 if(!m_listStar[i].activeSelf)
@@ -86,9 +124,11 @@ public class CObjectManager : MonoBehaviour
                     break;
                 }
             }
+            m_nStarCombo--;
             m_listStar[nActiveIndex].SetActive(true);
-            m_listStar[nActiveIndex].GetComponent<CObject>().CreateObject(vecPoz);
-        } else if ( nRandom == 1 )
+            // vecCreatePoz.y = 1 + ((float)m_nStarHeight * 2);
+            m_listStar[nActiveIndex].GetComponent<CObject>().CreateObject(vecCreatePoz);
+        } else if ( nObjectIndex == 1 )
         {
             for(int i = 0; i < m_listHeart.Length; i++)
             {
@@ -99,8 +139,8 @@ public class CObjectManager : MonoBehaviour
                 }
             }
             m_listHeart[nActiveIndex].SetActive(true);
-            m_listHeart[nActiveIndex].GetComponent<CObject>().CreateObject(vecPoz);
-        } else if ( nRandom == 2 )
+            m_listHeart[nActiveIndex].GetComponent<CObject>().CreateObject(vecCreatePoz);
+        } else if ( nObjectIndex == 2 )
         {
             for(int i = 0; i < m_listBible.Length; i++)
             {
@@ -111,8 +151,8 @@ public class CObjectManager : MonoBehaviour
                 }
             }
             m_listBible[nActiveIndex].SetActive(true);
-            m_listBible[nActiveIndex].GetComponent<CObject>().CreateObject(vecPoz);
-        } else if ( nRandom == 3 )
+            m_listBible[nActiveIndex].GetComponent<CObject>().CreateObject(vecCreatePoz);
+        } else if ( nObjectIndex == 3 )
         {
             for(int i = 0; i < m_listWood.Length; i++)
             {
@@ -123,8 +163,9 @@ public class CObjectManager : MonoBehaviour
                 }
             }
             m_listWood[nActiveIndex].SetActive(true);
-            m_listWood[nActiveIndex].GetComponent<CObject>().CreateObject(vecPoz);
-        } else if ( nRandom == 4 )
+            vecCreatePoz.y = 0.5f;                        
+            m_listWood[nActiveIndex].GetComponent<CObject>().CreateObject(vecCreatePoz);
+        } else if ( nObjectIndex == 4 )
         {
             for(int i = 0; i < m_listPuddie.Length; i++)
             {
@@ -135,7 +176,8 @@ public class CObjectManager : MonoBehaviour
                 }
             }
             m_listPuddie[nActiveIndex].SetActive(true);
-            m_listPuddie[nActiveIndex].GetComponent<CObject>().CreateObject(vecPoz);
+            vecCreatePoz.y = 0.2f;                        
+            m_listPuddie[nActiveIndex].GetComponent<CObject>().CreateObject(vecCreatePoz);
         }
     }
 

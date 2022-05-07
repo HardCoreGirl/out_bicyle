@@ -32,4 +32,32 @@ public class CObject : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        // Debug.Log("OnTrigger");
+        // Debug.Log(other.name);
+
+        if(other.tag.Equals("Player"))
+        {
+            if( m_nIndex == 0 )
+            {
+                CGameEngine.Instance.AddStarPoint();
+            }else if( m_nIndex == 1 )
+            {
+                CGameEngine.Instance.AddHP();
+            } else if (m_nIndex == 2 )
+            {
+                
+            } else if(m_nIndex >= 10 )
+            {
+                CGameEngine.Instance.Damage();
+            }
+
+            if( m_nIndex < 10 )
+                gameObject.SetActive(false);
+        }
+    }
 }
+
+
