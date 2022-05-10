@@ -187,8 +187,16 @@ public class CGameEngine : MonoBehaviour
         return m_nStarPoint;
     }
 
+    public void Unbeatable()
+    {
+        GetPlayer().GetComponent<CPlayer>().Unbeatable();
+    }
+
     public int Damage()
     {
+        if( GetPlayer().GetComponent<CPlayer>().IsUnbeatable() )
+            return m_nHP;
+
         m_nHP--;
         CUIInGame.Instance.UpdateHP(m_nHP);
 

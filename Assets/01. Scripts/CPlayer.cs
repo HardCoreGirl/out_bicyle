@@ -19,12 +19,21 @@ public class CPlayer : MonoBehaviour
 
     private int m_nState = 0;
 
+    private float m_fRefreshInterval = 0.1f;
+
+    private bool m_bIsUnbeatable = false;
+
     // Start is called before the first frame update
     void Start()
     {
         rd = GetComponent<Rigidbody2D>();
         // wheelRear.useMotor = true;
         // wheelBack.useMotor = true;
+        // SpriteRenderer[] spr = GetComponentsInChildren<SpriteRenderer>();
+        // for(int i = 0; i < spr.Length; i++)
+        // {
+        //     spr[i].color = new Color(1, 1, 1, 0);
+        // }
     }
 
     // Update is called once per frame
@@ -87,5 +96,51 @@ public class CPlayer : MonoBehaviour
             GetComponent<Animator>().Play("Run");
             m_nJumpStep = 0;
         }
+    }
+
+    public bool IsUnbeatable()
+    {
+        return m_bIsUnbeatable;
+    }
+
+    public void Unbeatable()
+    {
+        StartCoroutine("ProcessUnbeatable");
+    }
+
+    IEnumerator ProcessUnbeatable()
+    {
+        m_bIsUnbeatable = true;
+
+        float fTime = 0;
+        SpriteRenderer[] spr = GetComponentsInChildren<SpriteRenderer>();
+
+        float fType = 0f;
+        while(true)
+        {
+            if( fTime > 5 )
+                break;
+
+            for(int i = 0; i < spr.Length; i++)
+            {
+                spr[i].color = new Color(1, 1, 1, fType);
+            }
+
+            if( fType == 0 )
+                fType = 1;
+            else
+                fType = 0;
+
+            yield return new WaitForSeconds(m_fRefreshInterval);
+
+            fTime += m_fRefreshInterval;
+        }
+
+        for(int i = 0; i < spr.Length; i++)
+        {
+            spr[i].color = new Color(1, 1, 1, 1);
+        }
+
+        m_bIsUnbeatable = false;
     }
 }

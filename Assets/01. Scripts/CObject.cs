@@ -48,7 +48,7 @@ public class CObject : MonoBehaviour
                 CGameEngine.Instance.AddHP();
             } else if (m_nIndex == 2 )
             {
-                
+                CGameEngine.Instance.Unbeatable();
             } else if(m_nIndex >= 10 )
             {
                 CGameEngine.Instance.Damage();
