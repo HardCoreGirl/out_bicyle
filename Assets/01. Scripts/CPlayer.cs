@@ -11,7 +11,6 @@ public class CPlayer : MonoBehaviour
     
     private Rigidbody2D rd;
     private float m_fSpeed = 5f;
-    private float m_fMaxSpeed = 10f;
 
     private int m_nHP = 0;
 
@@ -34,7 +33,7 @@ public class CPlayer : MonoBehaviour
         if( m_nState != 1 )
             return;
 
-        transform.position += new Vector3(1, 0, 0) * m_fSpeed * Time.deltaTime;
+        transform.position += new Vector3(1, 0, 0) * CGameData.Instance.GetBicyleSpeed() * Time.deltaTime;
         // Rigidbody2D rd = GetComponent<Rigidbody2D>();
 
         // rd.velocity = Vector2.zero;

@@ -40,6 +40,8 @@ public class CGameData : MonoBehaviour
     // 최대 확률 100000
     private int[] m_nRate = new int[5];      
 
+    private float m_fBicyleSpeed = 7f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -84,5 +86,15 @@ public class CGameData : MonoBehaviour
     public int GetRate(int nIndex)
     {
         return m_nRate[nIndex];
+    }
+
+    public void SetBicyleSpeed(float fSpeed)
+    {
+        m_fBicyleSpeed = fSpeed;
+    }
+
+    public float GetBicyleSpeed()
+    {
+        return m_fBicyleSpeed;
     }
 }

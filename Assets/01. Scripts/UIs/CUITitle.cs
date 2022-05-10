@@ -11,6 +11,8 @@ public class CUITitle : MonoBehaviour
 
     public TMP_InputField[] m_ifRate = new TMP_InputField[5];
 
+    public TMP_InputField m_ifSpeeed;
+
     
 
     
@@ -32,6 +34,8 @@ public class CUITitle : MonoBehaviour
         {
             m_ifRate[i].text = CGameData.Instance.GetRate(i).ToString();
         }
+
+        m_ifSpeeed.text = CGameData.Instance.GetBicyleSpeed().ToString();
     }
 
     public void OnClickStart()
@@ -40,6 +44,8 @@ public class CUITitle : MonoBehaviour
         {
             CGameData.Instance.SetRate(i, System.Convert.ToInt32(m_ifRate[i].text));
         }
+
+        CGameData.Instance.SetBicyleSpeed((float)System.Convert.ToDouble(m_ifSpeeed.text));
         CGameEngine.Instance.GameStart();
     }
 }
