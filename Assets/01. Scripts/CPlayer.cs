@@ -12,7 +12,7 @@ public class CPlayer : MonoBehaviour
     private Rigidbody2D rd;
     private float m_fSpeed = 5f;
 
-    private int m_nHP = 0;
+    // private int m_nHP = 0;
 
     // 점프 단계
     private int m_nJumpStep = 0;
@@ -33,7 +33,8 @@ public class CPlayer : MonoBehaviour
         if( m_nState != 1 )
             return;
 
-        transform.position += new Vector3(1, 0, 0) * CGameData.Instance.GetBicyleSpeed() * Time.deltaTime;
+        // transform.position += new Vector3(1, 0, 0) * CGameData.Instance.GetBicyleSpeed() * Time.deltaTime;
+        transform.position += new Vector3(1, 0, 0) * 7f * Time.deltaTime;
         // Rigidbody2D rd = GetComponent<Rigidbody2D>();
 
         // rd.velocity = Vector2.zero;
