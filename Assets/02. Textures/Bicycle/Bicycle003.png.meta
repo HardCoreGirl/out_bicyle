@@ -670,6 +670,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Shadow
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 18
+        width: 18
+        height: 195
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0628f9e9b005948b8a54783a335cc4cd
+      internalID: 2116197032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -683,6 +704,7 @@ TextureImporter:
     nameFileIdTable:
       Abdomen: -1027004343
       Thig_L: 1132990082
+      Shadow: 2116197032
       Head01: 138135680
       UpperArm_L: 1343020866
       Wheel_Front: 1430443205
