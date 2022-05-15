@@ -41,9 +41,9 @@ public class CUIInGame : MonoBehaviour
 
     public GameObject m_goPopupGameOver;
 
-    public TextMeshProUGUI m_txtHP;
+    public Text m_txtHP;
 
-    public TextMeshProUGUI m_txtStarPoint;
+    public Text m_txtStarPoint;
 
     // Start is called before the first frame update
     void Start()

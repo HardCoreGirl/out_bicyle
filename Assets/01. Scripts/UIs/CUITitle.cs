@@ -9,7 +9,7 @@ using TMPro;
 public class CUITitle : MonoBehaviour
 {
 
-    public TMP_InputField[] m_ifRate = new TMP_InputField[5];
+    public TMP_InputField[] m_ifRate = new TMP_InputField[6];
 
     public TMP_InputField m_ifSpeeed;
 

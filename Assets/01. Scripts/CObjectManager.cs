@@ -13,6 +13,9 @@ public class CObjectManager : MonoBehaviour
     public GameObject m_goBibleParent;
     public GameObject[] m_listBible = new GameObject[20];
 
+    public GameObject m_goKeyParent;
+    public GameObject[] m_listKey = new GameObject[20];
+
     public GameObject m_goWoodParent;
     public GameObject[] m_listWood = new GameObject[20];
 
@@ -56,6 +59,13 @@ public class CObjectManager : MonoBehaviour
             m_listBible[i] = Instantiate(Resources.Load("Prefabs/Objects/Bible") as GameObject);
             m_listBible[i].transform.SetParent(m_goBibleParent.transform);
             m_listBible[i].SetActive(false);
+        }
+
+        for(int i = 0; i < m_listKey.Length; i++)
+        {
+            m_listKey[i] = Instantiate(Resources.Load("Prefabs/Objects/Key") as GameObject);
+            m_listKey[i].transform.SetParent(m_goBibleParent.transform);
+            m_listKey[i].SetActive(false);
         }
 
         for(int i = 0; i < m_listWood.Length; i++)
@@ -154,6 +164,18 @@ public class CObjectManager : MonoBehaviour
             m_listBible[nActiveIndex].GetComponent<CObject>().CreateObject(vecCreatePoz);
         } else if ( nObjectIndex == 3 )
         {
+            for(int i = 0; i < m_listKey.Length; i++)
+            {
+                if(!m_listKey[i].activeSelf)
+                {
+                    nActiveIndex = i;
+                    break;
+                }
+            }
+            m_listKey[nActiveIndex].SetActive(true);
+            m_listKey[nActiveIndex].GetComponent<CObject>().CreateObject(vecCreatePoz);
+        } else if ( nObjectIndex == 4 )
+        {
             for(int i = 0; i < m_listWood.Length; i++)
             {
                 if(!m_listWood[i].activeSelf)
@@ -165,7 +187,7 @@ public class CObjectManager : MonoBehaviour
             m_listWood[nActiveIndex].SetActive(true);
             vecCreatePoz.y = 0.5f;                        
             m_listWood[nActiveIndex].GetComponent<CObject>().CreateObject(vecCreatePoz);
-        } else if ( nObjectIndex == 4 )
+        } else if ( nObjectIndex == 5 )
         {
             for(int i = 0; i < m_listPuddie.Length; i++)
             {
@@ -176,7 +198,7 @@ public class CObjectManager : MonoBehaviour
                 }
             }
             m_listPuddie[nActiveIndex].SetActive(true);
-            vecCreatePoz.y = 0.2f;                        
+            vecCreatePoz.y = 0f;                        
             m_listPuddie[nActiveIndex].GetComponent<CObject>().CreateObject(vecCreatePoz);
         }
     }
@@ -194,6 +216,10 @@ public class CObjectManager : MonoBehaviour
         for(int i = 0; i < m_listBible.Length; i++)
             if(m_listBible[i].activeSelf)
                 m_listBible[i].GetComponent<CObject>().HideObject();
+        
+        for(int i = 0; i < m_listKey.Length; i++)
+            if(m_listKey[i].activeSelf)
+                m_listKey[i].GetComponent<CObject>().HideObject();
 
         for(int i = 0; i < m_listWood.Length; i++)
             if(m_listWood[i].activeSelf)
@@ -204,3 +230,4 @@ public class CObjectManager : MonoBehaviour
                 m_listPuddie[i].GetComponent<CObject>().HideObject();
     }
 }
+

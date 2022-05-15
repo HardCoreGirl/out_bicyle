@@ -73,14 +73,14 @@ public class CGameEngine : MonoBehaviour
 
         GetComponent<CObjectManager>().InitObjects();
 
-        for(int i = 0; i <= 15; i++)
-        {
-            GameObject goRoad = Instantiate(Resources.Load("Prefabs/Roads/road01") as GameObject);
-            // m_goRoadParents.transform = goRoad.transform.parent;
-            goRoad.transform.SetParent(m_goRoadParents.transform);
-            goRoad.transform.position = new Vector3(i, 0, 0);
+        // for(int i = 0; i <= 15; i++)
+        // {
+        //     GameObject goRoad = Instantiate(Resources.Load("Prefabs/Roads/road01") as GameObject);
+        //     // m_goRoadParents.transform = goRoad.transform.parent;
+        //     goRoad.transform.SetParent(m_goRoadParents.transform);
+        //     goRoad.transform.position = new Vector3(i, 0, 0);
 
-        }
+        // }
         
     }
 
@@ -96,21 +96,44 @@ public class CGameEngine : MonoBehaviour
         if( (int)m_fPlayerXPoz > m_nPlayerPozIndex )
         {
             m_nPlayerPozIndex = (int)m_fPlayerXPoz;
-            GameObject goRoad = Instantiate(Resources.Load("Prefabs/Roads/road01") as GameObject);
-            // m_goRoadParents.transform = goRoad.transform.parent;
-            goRoad.transform.SetParent(m_goRoadParents.transform);
-            goRoad.transform.position = new Vector3(14 + m_nPlayerPozIndex, 0, 0);
 
             GetComponent<CObjectManager>().CreateObject(new Vector3(m_nPlayerPozIndex + 14, 0, 0));
-
             GetComponent<CObjectManager>().HideObject();
-
             m_goBGManager.GetComponent<CBGManager>().UpdateBG();
         }
 
-        m_vecCameraPoz = Camera.main.transform.position;
-        m_vecCameraPoz.x = m_fPlayerXPoz + 3;
-        Camera.main.transform.position = m_vecCameraPoz;
+        // m_vecCameraPoz = Camera.main.transform.position;
+        // m_vecCameraPoz.x = m_fPlayerXPoz + 3;
+        // Camera.main.transform.position = m_vecCameraPoz;
+
+        Camera.main.transform.position += new Vector3(1, 0, 0) * CGameData.Instance.GetBicyleSpeed() * Time.deltaTime;
+    }
+
+    void FixedUpdate()
+    {
+        // if( m_nState != 1 )
+        //     return;
+
+        // m_fPlayerXPoz = m_goActivePlayer.transform.position.x;
+
+        // if( (int)m_fPlayerXPoz > m_nPlayerPozIndex )
+        // {
+        //     m_nPlayerPozIndex = (int)m_fPlayerXPoz;
+        //     GameObject goRoad = Instantiate(Resources.Load("Prefabs/Roads/road01") as GameObject);
+        //     // m_goRoadParents.transform = goRoad.transform.parent;
+        //     goRoad.transform.SetParent(m_goRoadParents.transform);
+        //     goRoad.transform.position = new Vector3(14 + m_nPlayerPozIndex, 0, 0);
+
+        //     GetComponent<CObjectManager>().CreateObject(new Vector3(m_nPlayerPozIndex + 14, 0, 0));
+
+        //     GetComponent<CObjectManager>().HideObject();
+
+        //     m_goBGManager.GetComponent<CBGManager>().UpdateBG();
+        // }
+
+        // m_vecCameraPoz = Camera.main.transform.position;
+        // m_vecCameraPoz.x = m_fPlayerXPoz + 3;
+        // Camera.main.transform.position = m_vecCameraPoz;
     }
 
     public int GetState()

@@ -38,7 +38,7 @@ public class CGameData : MonoBehaviour
     private int m_nMaxRate = 100000;
 
     // 최대 확률 100000
-    private int[] m_nRate = new int[5];      
+    private int[] m_nRate = new int[6];      
 
     private float m_fBicyleSpeed = 7f;
 
@@ -58,8 +58,9 @@ public class CGameData : MonoBehaviour
         m_nRate[0] = 10000;
         m_nRate[1] = 1000;
         m_nRate[2] = 1000;
-        m_nRate[3] = 5000;
+        m_nRate[3] = 1000;
         m_nRate[4] = 5000;
+        m_nRate[5] = 5000;
     }
 
     public float GetJumpPower()
