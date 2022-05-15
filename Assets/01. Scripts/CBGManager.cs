@@ -23,10 +23,10 @@ public class CBGManager : MonoBehaviour
 
         for(int i = 0; i < m_listBG.Length; i++)
         {
-            if( m_listBG[i].transform.position.x + 18 < m_goPlayer.transform.position.x )
+            if( m_listBG[i].transform.position.x + 8 < m_goPlayer.transform.position.x )
             {
                 Vector3 vecNew = m_listBG[i].transform.position;
-                vecNew.x += 48;
+                vecNew.x += 24;
                 m_listBG[i].transform.position = vecNew;
             }
         }

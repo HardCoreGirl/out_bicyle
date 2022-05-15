@@ -36,7 +36,7 @@ public class CGameEngine : MonoBehaviour
 
     public GameObject m_goPlayer;
 
-    public GameObject[] m_listPlayer = new GameObject[2];
+    public GameObject[] m_listPlayer = new GameObject[3];
 
     public GameObject m_goActivePlayer;
 
@@ -109,7 +109,7 @@ public class CGameEngine : MonoBehaviour
         }
 
         m_vecCameraPoz = Camera.main.transform.position;
-        m_vecCameraPoz.x = m_fPlayerXPoz;
+        m_vecCameraPoz.x = m_fPlayerXPoz + 3;
         Camera.main.transform.position = m_vecCameraPoz;
     }
 
@@ -199,6 +199,8 @@ public class CGameEngine : MonoBehaviour
 
         m_nHP--;
         CUIInGame.Instance.UpdateHP(m_nHP);
+
+        GetPlayer().GetComponent<CPlayer>().Damage();
 
         if( m_nHP <= 0 )
         {

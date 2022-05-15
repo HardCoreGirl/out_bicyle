@@ -8,8 +8,11 @@ public class CPlayer : MonoBehaviour
     // public WheelJoint2D wheelBack;
 
     // public Rigidbody2D rdRear;
+    public GameObject m_goUnbeatable;
     
     private Rigidbody2D rd;
+    private Animator m_ani;
+
     private float m_fSpeed = 5f;
 
     // private int m_nHP = 0;
@@ -27,6 +30,9 @@ public class CPlayer : MonoBehaviour
     void Start()
     {
         rd = GetComponent<Rigidbody2D>();
+        m_ani = GetComponentInChildren<Animator>();
+
+        m_goUnbeatable.SetActive(false);
         // wheelRear.useMotor = true;
         // wheelBack.useMotor = true;
         // SpriteRenderer[] spr = GetComponentsInChildren<SpriteRenderer>();
@@ -78,7 +84,9 @@ public class CPlayer : MonoBehaviour
         if( m_nJumpStep > 1 )
             return;
 
-        GetComponent<Animator>().Play("Jump");
+        m_ani.Rebind();
+
+        m_ani.Play("Jump003");
 
         rd.velocity = Vector2.zero;
         Vector2 JumpVelocity = new Vector2(0, CGameData.Instance.GetJumpPower());
@@ -92,10 +100,16 @@ public class CPlayer : MonoBehaviour
     {
         if( m_nJumpStep > 0 )
         {
-            // Debug.Log("FinishJump");
-            GetComponent<Animator>().Play("Run");
+            m_ani.Play("Run003");
             m_nJumpStep = 0;
         }
+    }
+
+    public void Damage()
+    {
+        m_ani.Rebind();
+
+        m_ani.Play("Damage003");
     }
 
     public bool IsUnbeatable()
@@ -112,34 +126,40 @@ public class CPlayer : MonoBehaviour
     {
         m_bIsUnbeatable = true;
 
-        float fTime = 0;
-        SpriteRenderer[] spr = GetComponentsInChildren<SpriteRenderer>();
+        m_goUnbeatable.SetActive(true);
 
-        float fType = 0f;
-        while(true)
-        {
-            if( fTime > 5 )
-                break;
+        yield return new WaitForSeconds(5f);
 
-            for(int i = 0; i < spr.Length; i++)
-            {
-                spr[i].color = new Color(1, 1, 1, fType);
-            }
+        m_goUnbeatable.SetActive(false);
 
-            if( fType == 0 )
-                fType = 1;
-            else
-                fType = 0;
+        // float fTime = 0;
+        // SpriteRenderer[] spr = GetComponentsInChildren<SpriteRenderer>();
 
-            yield return new WaitForSeconds(m_fRefreshInterval);
+        // float fType = 0f;
+        // while(true)
+        // {
+        //     if( fTime > 5 )
+        //         break;
 
-            fTime += m_fRefreshInterval;
-        }
+        //     for(int i = 0; i < spr.Length; i++)
+        //     {
+        //         spr[i].color = new Color(1, 1, 1, fType);
+        //     }
 
-        for(int i = 0; i < spr.Length; i++)
-        {
-            spr[i].color = new Color(1, 1, 1, 1);
-        }
+        //     if( fType == 0 )
+        //         fType = 1;
+        //     else
+        //         fType = 0;
+
+        //     yield return new WaitForSeconds(m_fRefreshInterval);
+
+        //     fTime += m_fRefreshInterval;
+        // }
+
+        // for(int i = 0; i < spr.Length; i++)
+        // {
+        //     spr[i].color = new Color(1, 1, 1, 1);
+        // }
 
         m_bIsUnbeatable = false;
     }
