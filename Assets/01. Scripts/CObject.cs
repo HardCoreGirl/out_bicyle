@@ -6,6 +6,8 @@ public class CObject : MonoBehaviour
 {
     public int m_nIndex;    // 0 : Star
 
+    private int m_nValue;
+
     // private bool m_bIsActive;
 
     // Start is called before the first frame update
@@ -23,6 +25,16 @@ public class CObject : MonoBehaviour
     public void CreateObject(Vector3 vecPoz)
     {
         transform.position = vecPoz;
+    }
+
+    public void SetValue(int nValue)
+    {
+        m_nValue = nValue;
+    }
+
+    public int GetValue()
+    {
+        return m_nValue;
     }
 
     public void HideObject()
@@ -49,6 +61,14 @@ public class CObject : MonoBehaviour
             } else if (m_nIndex == 2 )
             {
                 CGameEngine.Instance.Unbeatable();
+            } else if (m_nIndex == 3 )
+            {
+                Debug.Log("Key Index : " + m_nValue);
+                CGameEngine.Instance.SetKeyItem(CGameEngine.Instance.GetStage(), m_nValue, 1);
+                CGameEngine.Instance.AddKeyCount();
+                CUIInGame.Instance.UpdateKeyCount();
+                // CGameEngine.Instance.Unbeatable();
+
             } else if(m_nIndex >= 10 )
             {
                 CGameEngine.Instance.Damage();

@@ -45,6 +45,8 @@ public class CUIInGame : MonoBehaviour
 
     public Text m_txtStarPoint;
 
+    public Text m_txtKeyCount;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -65,6 +67,11 @@ public class CUIInGame : MonoBehaviour
     public void UpdateHP(int nHP)
     {
         m_txtHP.text = "X " + nHP.ToString();
+    }
+
+    public void UpdateKeyCount()
+    {
+        m_txtKeyCount.text = CGameEngine.Instance.GetKeyCount().ToString() + " / " + CGameData.Instance.GetStageKeyCount(CGameEngine.Instance.GetStage());
     }
 
     public void UpdateStarPoint(int nPoint)

@@ -4,6 +4,35 @@ using UnityEngine;
 
 public class CObjectManager : MonoBehaviour
 {
+    #region SingleTon
+    public static CObjectManager _instance = null;
+
+    public static CObjectManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+                Debug.Log("CGameEngine install null");
+
+            return _instance;
+        }
+    }
+
+    void Awake()
+    {
+        if (_instance == null)
+            _instance = this;
+    }
+
+    void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            _instance = null;
+        }
+    }
+    #endregion
+
     public GameObject m_goStarParent;
     public GameObject[] m_listStar = new GameObject[20];
 
@@ -24,6 +53,8 @@ public class CObjectManager : MonoBehaviour
 
     private int m_nStarCombo = 0;
     private int m_nStarHeight = 0;
+
+    private int[] m_listKeyPoz = new int[7];
 
 
     // Start is called before the first frame update
@@ -84,15 +115,126 @@ public class CObjectManager : MonoBehaviour
 
     }
 
+    public void InitKeyItem(int nStage)
+    {
+        for(int i = 0; i < m_listKeyPoz.Length; i++ )
+            m_listKeyPoz[i] = -1;
+
+        int nKeyCount = 0;
+        int nDist = 0;
+
+        nKeyCount = CGameData.Instance.GetStageKeyCount(nStage);
+        nDist = CGameData.Instance.GetDistance(CGameData.Instance.GetStageSpeed(nStage));
+        
+        // switch(nStage)
+        // {
+        //     case 0: nKeyCount = 2; nDist = 360; break;
+        //     case 1: nKeyCount = 6; nDist = 360; break;
+        //     case 2: nKeyCount = 5; nDist = 360; break;
+        //     case 3: nKeyCount = 5; nDist = 360; break;
+        //     case 4: nKeyCount = 6; nDist = 425; break;
+        //     case 5: nKeyCount = 3; nDist = 425; break;
+        //     case 6: nKeyCount = 5; nDist = 425; break;
+        //     case 7: nKeyCount = 4; nDist = 485; break;
+        //     case 8: nKeyCount = 4; nDist = 485; break;
+        //     case 9: nKeyCount = 4; nDist = 485; break;
+        //     case 10:    nKeyCount = 7;  nDist = 600; break;
+        // }
+
+        int nIndex = 0;
+        while(true)
+        {
+            int nRandomValue = Random.Range(0, nDist);
+
+            bool bIsExist = false;
+            for(int i = 0; i < nIndex; i++ )
+            {
+                if(m_listKeyPoz[i] == nRandomValue)
+                    bIsExist = true;
+
+            }
+
+            if(bIsExist)
+                continue;
+
+            m_listKeyPoz[nIndex] = nRandomValue;
+
+            nIndex++;
+
+            if( nIndex >= nKeyCount )
+                break;
+        }
+
+        for(int i = 0; i < m_listKeyPoz.Length; i++)
+        {
+            Debug.Log(m_listKeyPoz[i]);
+        }
+    }
+
+    public bool IsKeyItemPoz(int nPoz, bool bIsCheckStar = false) // 별인지 체크
+    {
+        for(int i = 0; i < m_listKeyPoz.Length; i++)
+        {
+            if( bIsCheckStar )
+            {
+                if( m_listKeyPoz[i] -5 <= nPoz || m_listKeyPoz[i] <= nPoz )
+                {
+                    return true;
+                }
+            } else {
+                if( m_listKeyPoz[i] == nPoz )   
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    public int GetKeyIndex(int nPoz)
+    {
+        for(int i = 0; i < m_listKeyPoz.Length; i++)
+        {
+            if( m_listKeyPoz[i] == nPoz )   
+                return i;
+        }
+
+        return -1;
+    }
+
+
     public void CreateObject(Vector3 vecPoz)
     {
+        Vector3 vecCreatePoz = vecPoz;
+
+        int nHeight = 0;
+        int nActiveIndex = 0;        
+
+        int nNowPoz = (int)vecPoz.x;
+
+        if( IsKeyItemPoz(nNowPoz) )
+        {
+            int nKeyIndex = GetKeyIndex(nNowPoz);
+            nHeight = Random.Range(0, 3);
+            vecCreatePoz.y = 0.7f + ((float)nHeight * 1.2f);
+
+            for(int i = 0; i < m_listKey.Length; i++)
+            {
+                if(!m_listKey[i].activeSelf)
+                {
+                    nActiveIndex = i;
+                    break;
+                }
+            }
+            m_listKey[nActiveIndex].SetActive(true);
+            m_listKey[nActiveIndex].GetComponent<CObject>().CreateObject(vecCreatePoz);
+            m_listKey[nActiveIndex].GetComponent<CObject>().SetValue(nKeyIndex);
+            return;
+        }
+
         int nRandomValue = Random.Range(0, CGameData.Instance.GetMaxRate());
 
         int nObjectIndex = -1;
         int nTotalRate = 0;
-        int nHeight = 0;
-        Vector3 vecCreatePoz = vecPoz;
-
+        
         if( m_nStarCombo > 0 )
         {
             nObjectIndex = 0;
@@ -111,13 +253,13 @@ public class CObjectManager : MonoBehaviour
             if( nObjectIndex < 0 )
                 return;
             
-            if( nObjectIndex < 3)
+            if( nObjectIndex < 2)
                 nHeight = Random.Range(0, 3);
         }
 
-        vecCreatePoz.y = 1 + ((float)nHeight * 2);
+        vecCreatePoz.y = 0.7f + ((float)nHeight * 1.2f);
 
-        int nActiveIndex = 0;        
+        
         if( nObjectIndex == 0 )
         {
             if( m_nStarCombo <= 0 )
@@ -162,19 +304,19 @@ public class CObjectManager : MonoBehaviour
             }
             m_listBible[nActiveIndex].SetActive(true);
             m_listBible[nActiveIndex].GetComponent<CObject>().CreateObject(vecCreatePoz);
+        // } else if ( nObjectIndex == 3 )
+        // {
+        //     for(int i = 0; i < m_listKey.Length; i++)
+        //     {
+        //         if(!m_listKey[i].activeSelf)
+        //         {
+        //             nActiveIndex = i;
+        //             break;
+        //         }
+        //     }
+        //     m_listKey[nActiveIndex].SetActive(true);
+        //     m_listKey[nActiveIndex].GetComponent<CObject>().CreateObject(vecCreatePoz);
         } else if ( nObjectIndex == 3 )
-        {
-            for(int i = 0; i < m_listKey.Length; i++)
-            {
-                if(!m_listKey[i].activeSelf)
-                {
-                    nActiveIndex = i;
-                    break;
-                }
-            }
-            m_listKey[nActiveIndex].SetActive(true);
-            m_listKey[nActiveIndex].GetComponent<CObject>().CreateObject(vecCreatePoz);
-        } else if ( nObjectIndex == 4 )
         {
             for(int i = 0; i < m_listWood.Length; i++)
             {
@@ -187,7 +329,7 @@ public class CObjectManager : MonoBehaviour
             m_listWood[nActiveIndex].SetActive(true);
             vecCreatePoz.y = 0.5f;                        
             m_listWood[nActiveIndex].GetComponent<CObject>().CreateObject(vecCreatePoz);
-        } else if ( nObjectIndex == 5 )
+        } else if ( nObjectIndex == 4 )
         {
             for(int i = 0; i < m_listPuddie.Length; i++)
             {

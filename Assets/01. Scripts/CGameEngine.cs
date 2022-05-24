@@ -58,13 +58,26 @@ public class CGameEngine : MonoBehaviour
     private int m_nHP = 0;
     private int m_nStarPoint = 0;
 
+    private int[,] m_listGetKey = new int[11,7];
+
+    private int m_nStage = 1;
+
+    private int m_nGetKeyCnt = 0;
+
     // Start is called before the first frame update
     void Start()
     {
         Debug.Log("GameStart");
-        // rb = m_goPlayer.GetComponent<Rigidbody2D>();
 
-        // GameStart();
+        string strKey = "";
+        for(int i = 0; i < 11; i++)
+        {
+            for(int j = 0; j < 7; j++)
+            {
+                strKey = "Key" + i.ToString("00") + j.ToString("00");
+                m_listGetKey[i, j] = PlayerPrefs.GetInt(strKey, -1);
+            }
+        }
 
         CGameData.Instance.InitData();
 
@@ -160,15 +173,29 @@ public class CGameEngine : MonoBehaviour
     public void GameStart()
     {
         m_uiManager.ShowUI(1);
+        CObjectManager.Instance.InitKeyItem(m_nStage);        
 
         SetActivePlayer(0);
 
         SetHP(3);
+        SetKeyCount(0);
         SetStarPoint(0);
+
+        CUIInGame.Instance.UpdateKeyCount();
 
         GetPlayer().GetComponent<CPlayer>().Run();
 
         m_nState = 1;
+    }
+
+    public void SetStage(int nStage)
+    {
+        m_nStage = nStage;
+    }
+
+    public int GetStage()
+    {
+        return m_nStage;
     }
 
     public void SetHP(int nHP)
@@ -187,6 +214,23 @@ public class CGameEngine : MonoBehaviour
     public int GetHP()
     {
         return m_nHP;
+    }
+
+    public void SetKeyCount(int nCount)
+    {
+        m_nGetKeyCnt = nCount;
+    }
+
+    public int GetKeyCount()
+    {
+        return m_nGetKeyCnt;
+    }
+
+    public int AddKeyCount()
+    {
+        int nAddCount = GetKeyCount() + 1;
+        SetKeyCount(nAddCount);
+        return nAddCount;
     }
 
     public void SetStarPoint(int nPoint)
@@ -235,4 +279,17 @@ public class CGameEngine : MonoBehaviour
         return m_nHP;
     }
 
+    public void SetKeyItem(int nStage, int nIndex, int nState)
+    {
+        m_listGetKey[nStage, nIndex] = nState;
+
+        string strKey = "Key" + nStage.ToString("00") + nIndex.ToString("00");
+        PlayerPrefs.SetInt(strKey, nState);
+    }
+
+    public int GetKeyItem(int nState, int nIndex)
+    {
+        Debug.Log(nState + " : " + nIndex);
+        return m_listGetKey[nState, nIndex];
+    }
 }
