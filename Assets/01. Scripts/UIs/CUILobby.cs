@@ -8,6 +8,12 @@ public class CUILobby : MonoBehaviour
 {
     public GameObject[] m_goUI = new GameObject[5];
 
+    public GameObject m_goPopupPlay;
+
+    public GameObject m_goPopupSelect;
+
+    private int m_nSelectBicycleIndex = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -53,9 +59,21 @@ public class CUILobby : MonoBehaviour
         ShowUI(4);
     }
 
-    public void OnClickPlayerInStage(int nIndex)
+    public void OnClickPlayInStage(int nIndex)
     {
+        // StartGame();
+        m_goPopupPlay.SetActive(true);
+    }
+
+    public void OnClickPlayInStagePopup()
+    {
+        m_goPopupPlay.SetActive(false);
         StartGame();
+    }
+
+    public void OnClickCanceInStagePopup()
+    {
+        m_goPopupPlay.SetActive(false);
     }
 
     public void OnClickBackInStorageBox()
@@ -65,9 +83,24 @@ public class CUILobby : MonoBehaviour
 
     public void OnClickSelectBicycleInStorageBox(int nIndex)
     {
-        CGameData.Instance.SetPlayerIndex(nIndex);
+        m_nSelectBicycleIndex = nIndex;
+        // CGameData.Instance.SetPlayerIndex(nIndex);
+        // ShowUI(1);
+        m_goPopupSelect.SetActive(true);
+    }
+
+    public void OnClickSelectInStorageBox()
+    {
+        CGameData.Instance.SetPlayerIndex(m_nSelectBicycleIndex);
+        m_goPopupSelect.SetActive(false);
         ShowUI(1);
     }
+
+    public void OnClickCancelBicycleInStorageBox()
+    {
+        m_goPopupSelect.SetActive(false);
+    }
+
 
     public void HideAllUI()
     {
@@ -82,5 +115,14 @@ public class CUILobby : MonoBehaviour
         HideAllUI();
 
         m_goUI[nIndex].SetActive(true);
+
+        if( nIndex == 1 )
+        {
+            m_goPopupPlay.SetActive(false);
+        }
+        else if( nIndex == 4 )
+        {
+            m_goPopupSelect.SetActive(false);
+        }
     }
 }

@@ -79,7 +79,7 @@ public class CGameEngine : MonoBehaviour
             }
         }
 
-        // CGameData.Instance.InitData();
+        CGameData.Instance.InitData();
 
         m_uiManager = GetComponent<CUIsManager>();
         m_uiManager.ShowUI(0);

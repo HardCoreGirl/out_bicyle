@@ -49,6 +49,7 @@ public class CPlayer : MonoBehaviour
             return;
 
         transform.position += new Vector3(1, 0, 0) * CGameData.Instance.GetBicyleSpeed() * Time.deltaTime;
+
         // transform.position += new Vector3(1, 0, 0) * 7f * Time.deltaTime;
         // Rigidbody2D rd = GetComponent<Rigidbody2D>();
 
