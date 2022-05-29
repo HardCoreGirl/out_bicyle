@@ -33,6 +33,11 @@ public class CUILobby : MonoBehaviour
         ShowUI(1);
     }
 
+    public void OnClickBackInState()
+    {
+        ShowUI(0);
+    }
+
     public void OnClickKeywordInStage()
     {
         ShowUI(2);
@@ -51,6 +56,11 @@ public class CUILobby : MonoBehaviour
     public void OnClickPlayerInStage(int nIndex)
     {
         StartGame();
+    }
+
+    public void OnClickBackInStorageBox()
+    {
+        ShowUI(1);
     }
 
     public void OnClickSelectBicycleInStorageBox(int nIndex)
