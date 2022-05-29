@@ -98,6 +98,7 @@ public class CPlayer : MonoBehaviour
 
     public void FinishJump()
     {
+        Debug.Log("Finish Jump");
         if( m_nJumpStep > 0 )
         {
             m_ani.Play("Run003");
