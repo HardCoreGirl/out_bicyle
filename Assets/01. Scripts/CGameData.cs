@@ -21,7 +21,14 @@ public class CGameData : MonoBehaviour
     void Awake()
     {
         if (_instance == null)
+        {
             _instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else 
+        {
+            DestroyImmediate(this.gameObject);
+        }
     }
 
     void OnDestroy()
@@ -47,6 +54,11 @@ public class CGameData : MonoBehaviour
 
     // 스테이지별 자전거 속도
     private float[] m_listStageSpeed = new float[11];
+
+
+    private int m_nPlayerIndex = 0;
+
+    private int m_nState = 0;
 
 
     // Start is called before the first frame update
@@ -144,5 +156,25 @@ public class CGameData : MonoBehaviour
     public int GetDistance(float fSpeed)
     {
         return (int)(fSpeed * 60f);
+    }
+
+    public void SetPlayerIndex(int nIndex)
+    {
+        m_nPlayerIndex = nIndex;
+    }
+
+    public int GetPlayerIndex()
+    {
+        return m_nPlayerIndex;
+    }
+
+    public void SetState(int nState)
+    {
+        m_nState = nState;
+    }
+
+    public int GetState()
+    {
+        return m_nState;
     }
 }

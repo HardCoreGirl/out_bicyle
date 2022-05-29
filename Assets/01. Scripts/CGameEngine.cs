@@ -79,7 +79,7 @@ public class CGameEngine : MonoBehaviour
             }
         }
 
-        CGameData.Instance.InitData();
+        // CGameData.Instance.InitData();
 
         m_uiManager = GetComponent<CUIsManager>();
         m_uiManager.ShowUI(0);
@@ -101,7 +101,8 @@ public class CGameEngine : MonoBehaviour
     void Update()
     {
         // rb.transform.position += new Vector3(1, 0, 0) * 0.4f * Time.deltaTime;
-        if( m_nState != 1 )
+        // if( m_nState != 1 )
+        if( CGameData.Instance.GetState() != 1 )
             return;
 
         m_fPlayerXPoz = m_goActivePlayer.transform.position.x;
@@ -175,7 +176,8 @@ public class CGameEngine : MonoBehaviour
         m_uiManager.ShowUI(1);
         CObjectManager.Instance.InitKeyItem(m_nStage);        
 
-        SetActivePlayer(0);
+        // SetActivePlayer(2);
+        SetActivePlayer(CGameData.Instance.GetPlayerIndex());
 
         SetHP(3);
         SetKeyCount(0);
@@ -185,7 +187,8 @@ public class CGameEngine : MonoBehaviour
 
         GetPlayer().GetComponent<CPlayer>().Run();
 
-        m_nState = 1;
+        // m_nState = 1;
+        CGameData.Instance.SetState(1);
     }
 
     public void SetStage(int nStage)

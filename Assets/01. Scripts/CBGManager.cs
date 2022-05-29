@@ -55,7 +55,8 @@ public class CBGManager : MonoBehaviour
 
     public void FixedUpdate()
     {
-        if( CGameEngine.Instance.GetState() != 1 )
+        // if( CGameEngine.Instance.GetState() != 1 )
+        if( CGameData.Instance.GetState() != 1 )
             return;
 
         m_goBackgrounds.transform.localPosition += new Vector3(-1, 0, 0) * (CGameData.Instance.GetBicyleSpeed() * 0.1f)* Time.deltaTime;

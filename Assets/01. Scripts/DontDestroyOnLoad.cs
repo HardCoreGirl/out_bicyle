@@ -7,7 +7,7 @@ public class DontDestroyOnLoad : MonoBehaviour
     private static DontDestroyOnLoad s_Instance = null;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if( s_Instance )    
         {
@@ -23,5 +23,10 @@ public class DontDestroyOnLoad : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public int GetTest()
+    {
+        return 1;
     }
 }
