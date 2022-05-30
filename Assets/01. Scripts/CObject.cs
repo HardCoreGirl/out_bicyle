@@ -64,9 +64,17 @@ public class CObject : MonoBehaviour
             } else if (m_nIndex == 3 )
             {
                 Debug.Log("Key Index : " + m_nValue);
+
                 CGameEngine.Instance.SetKeyItem(CGameEngine.Instance.GetStage(), m_nValue, 1);
                 CGameEngine.Instance.AddKeyCount();
+                // CUIInGame.Instance.ShowPopupGetKeyword(m_nValue);
                 CUIInGame.Instance.UpdateKeyCount();
+
+                // CGameEngine.Instance.GetPlayer().GetComponent<CPlayer>().GetKey();
+                // CGameEngine.Instance.SetState(3);
+
+                CGameEngine.Instance.PauseGetKeyItem(m_nValue);
+                
                 // CGameEngine.Instance.Unbeatable();
 
             } else if(m_nIndex >= 10 )

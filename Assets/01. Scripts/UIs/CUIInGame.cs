@@ -39,6 +39,8 @@ public class CUIInGame : MonoBehaviour
     }
     #endregion
 
+    public GameObject m_goPopupGameStart;
+
     public GameObject m_goPopupGameOver;
 
     public Text m_txtHP;
@@ -46,6 +48,14 @@ public class CUIInGame : MonoBehaviour
     public Text m_txtStarPoint;
 
     public Text m_txtKeyCount;
+
+    public GameObject m_goPopupGetKeyword;
+    public Text m_txtGetKeyIndex;
+    public Text m_txtGetKeyMessage;
+
+    public GameObject m_goPopupFinish;
+
+    public Slider m_sliderPlayer;
 
     // Start is called before the first frame update
     void Start()
@@ -61,7 +71,10 @@ public class CUIInGame : MonoBehaviour
 
     public void InitUI()
     {
+        HidePopupGameStart();
         m_goPopupGameOver.SetActive(false);
+        m_goPopupGetKeyword.SetActive(false);
+        HidePopupFinish();
     }
 
     public void UpdateHP(int nHP)
@@ -77,6 +90,44 @@ public class CUIInGame : MonoBehaviour
     public void UpdateStarPoint(int nPoint)
     {
         m_txtStarPoint.text = nPoint.ToString();
+    }
+
+    public void UpdatePlayBar(float fDist)
+    {
+        m_sliderPlayer.value = fDist;
+    }
+
+    public void ShowPopupGameStart()
+    {
+        m_goPopupGameStart.SetActive(true);
+    }
+
+    public void HidePopupGameStart()
+    {
+        m_goPopupGameStart.SetActive(false);
+    }
+
+    public void ShowPopupGetKeyword(int nIndex)
+    {
+        m_goPopupGetKeyword.SetActive(true);
+        m_txtGetKeyIndex.text = CGameData.Instance.GetKeyIndex(nIndex);
+        m_txtGetKeyMessage.text = CGameData.Instance.GetKeyMessage(CGameData.Instance.GetStage(), nIndex);
+        // CGameData.instance.GetStage()
+    }
+
+    public void HidePopupGetKeyword()
+    {
+        m_goPopupGetKeyword.SetActive(false);
+    }
+
+    public void ShowPopupFinish()
+    {
+        m_goPopupFinish.SetActive(true);
+    }
+
+    public void HidePopupFinish()
+    {
+        m_goPopupFinish.SetActive(false);
     }
 
     public void OnClickJump()

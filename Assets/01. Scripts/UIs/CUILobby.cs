@@ -62,6 +62,7 @@ public class CUILobby : MonoBehaviour
     public void OnClickPlayInStage(int nIndex)
     {
         // StartGame();
+        CGameData.Instance.SetStage(nIndex);
         m_goPopupPlay.SetActive(true);
     }
 

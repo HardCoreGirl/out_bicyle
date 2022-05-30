@@ -87,7 +87,8 @@ public class CPlayer : MonoBehaviour
 
         m_ani.Rebind();
 
-        m_ani.Play("Jump003");
+        string strAniName = "Jump" + (CGameData.Instance.GetPlayerIndex() + 3).ToString("000");
+        m_ani.Play(strAniName);
 
         rd.velocity = Vector2.zero;
         Vector2 JumpVelocity = new Vector2(0, CGameData.Instance.GetJumpPower());
@@ -102,7 +103,8 @@ public class CPlayer : MonoBehaviour
         Debug.Log("Finish Jump");
         if( m_nJumpStep > 0 )
         {
-            m_ani.Play("Run003");
+            string strAniName = "Run" + (CGameData.Instance.GetPlayerIndex() + 3).ToString("000");
+            m_ani.Play(strAniName);
             m_nJumpStep = 0;
         }
     }
@@ -111,7 +113,8 @@ public class CPlayer : MonoBehaviour
     {
         m_ani.Rebind();
 
-        m_ani.Play("Damage003");
+        string strAniName = "Damage" + (CGameData.Instance.GetPlayerIndex() + 3).ToString("000");
+        m_ani.Play(strAniName);
     }
 
     public bool IsUnbeatable()

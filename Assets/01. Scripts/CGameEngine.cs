@@ -64,6 +64,11 @@ public class CGameEngine : MonoBehaviour
 
     private int m_nGetKeyCnt = 0;
 
+    // private float m_fGetKeyTime = 0;
+    private long m_lGetKeyTime = 0;
+
+    private int m_nGetKeyIndex = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -82,7 +87,7 @@ public class CGameEngine : MonoBehaviour
         CGameData.Instance.InitData();
 
         m_uiManager = GetComponent<CUIsManager>();
-        m_uiManager.ShowUI(0);
+        // m_uiManager.ShowUI(0);
 
         GetComponent<CObjectManager>().InitObjects();
 
@@ -94,16 +99,36 @@ public class CGameEngine : MonoBehaviour
         //     goRoad.transform.position = new Vector3(i, 0, 0);
 
         // }
+
+        GameStart();
         
     }
 
     // Update is called once per frame
     void Update()
     {
+        if( Time.timeScale == 0 )
+        {
+            if( System.DateTime.Now.Ticks > m_lGetKeyTime )
+            {
+                CUIInGame.Instance.HidePopupGetKeyword();
+                Time.timeScale = 1;
+            }
+        }
         // rb.transform.position += new Vector3(1, 0, 0) * 0.4f * Time.deltaTime;
         // if( m_nState != 1 )
         if( CGameData.Instance.GetState() != 1 )
             return;
+
+    
+        if( CGameData.Instance.AddPlayTime(Time.deltaTime) >= 60f )
+        {
+            CUIInGame.Instance.ShowPopupFinish();
+            CGameData.Instance.SetState(2);
+            return;
+        }
+
+        CUIInGame.Instance.UpdatePlayBar(CGameData.Instance.GetPlayTime() / 60f);
 
         m_fPlayerXPoz = m_goActivePlayer.transform.position.x;
 
@@ -150,6 +175,11 @@ public class CGameEngine : MonoBehaviour
         // Camera.main.transform.position = m_vecCameraPoz;
     }
 
+    public void SetState(int nState)
+    {
+        m_nState = nState;
+    }
+
     public int GetState()
     {
         return m_nState;
@@ -173,6 +203,8 @@ public class CGameEngine : MonoBehaviour
 
     public void GameStart()
     {
+        CGameData.Instance.SetPlayTime(0);
+
         m_uiManager.ShowUI(1);
         CObjectManager.Instance.InitKeyItem(m_nStage);        
 
@@ -185,10 +217,37 @@ public class CGameEngine : MonoBehaviour
 
         CUIInGame.Instance.UpdateKeyCount();
 
-        GetPlayer().GetComponent<CPlayer>().Run();
+        // CUIInGame.Instance.ShowPopupGameStart();
 
-        // m_nState = 1;
+        StartCoroutine("ProcessGameStart");
+
+        // GetPlayer().GetComponent<CPlayer>().Run();
+
+        // // m_nState = 1;
+        // CGameData.Instance.SetState(1);
+    }
+
+    IEnumerator ProcessGameStart()
+    {
+        CUIInGame.Instance.ShowPopupGameStart();
+
+        yield return new WaitForSeconds(4f);
+
+        GetPlayer().GetComponent<CPlayer>().Run();
         CGameData.Instance.SetState(1);
+
+        // yield return new WaitForSeconds(0.5f);
+        CUIInGame.Instance.HidePopupGameStart();
+    }
+
+    public void PauseGetKeyItem(int nKeyIndex)
+    {
+        m_nGetKeyIndex = nKeyIndex;
+        
+        CUIInGame.Instance.ShowPopupGetKeyword(m_nGetKeyIndex);
+        m_lGetKeyTime = System.DateTime.Now.Ticks + 15000000;
+
+        Time.timeScale = 0;
     }
 
     public void SetStage(int nStage)
@@ -274,7 +333,8 @@ public class CGameEngine : MonoBehaviour
 
         if( m_nHP <= 0 )
         {
-            m_nState = 2;
+            // m_nState = 2;
+            CGameData.Instance.SetState(2);
             GetPlayer().GetComponent<CPlayer>().GameOver();
             m_uiManager.ShowPopupGameOver();
         }

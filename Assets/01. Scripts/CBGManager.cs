@@ -38,7 +38,7 @@ public class CBGManager : MonoBehaviour
         
         for(int i = 0; i < m_listBackground.Length; i++)
         {
-            if( m_listBackground[i].transform.position.x + 8 < m_goPlayer.transform.position.x )
+            if( m_listBackground[i].transform.position.x + 16 < m_goPlayer.transform.position.x )
             {
                 Vector3 vecNew = m_listBackground[i].transform.position;
                 vecNew.x += 48;
