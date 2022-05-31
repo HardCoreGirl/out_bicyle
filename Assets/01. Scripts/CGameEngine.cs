@@ -44,6 +44,9 @@ public class CGameEngine : MonoBehaviour
 
     public GameObject m_goRoadParents;
 
+    public GameObject[] m_listStageRoad = new GameObject[12];
+    public GameObject[] m_listBG = new GameObject[3];
+
 
     private CUIsManager m_uiManager;
     private Rigidbody2D rb;
@@ -56,9 +59,7 @@ public class CGameEngine : MonoBehaviour
     private int m_nPlayerPozIndex = 0;
 
     private int m_nHP = 0;
-    private int m_nStarPoint = 0;
-
-    private int[,] m_listGetKey = new int[11,7];
+    // private int[,] m_listGetKey = new int[11,7];
 
     private int m_nStage = 1;
 
@@ -73,16 +74,6 @@ public class CGameEngine : MonoBehaviour
     void Start()
     {
         Debug.Log("GameStart");
-
-        string strKey = "";
-        for(int i = 0; i < 11; i++)
-        {
-            for(int j = 0; j < 7; j++)
-            {
-                strKey = "Key" + i.ToString("00") + j.ToString("00");
-                m_listGetKey[i, j] = PlayerPrefs.GetInt(strKey, -1);
-            }
-        }
 
         CGameData.Instance.InitData();
 
@@ -123,6 +114,9 @@ public class CGameEngine : MonoBehaviour
     
         if( CGameData.Instance.AddPlayTime(Time.deltaTime) >= 60f )
         {
+            CGameData.Instance.SetClearStage(CGameData.Instance.GetStage(), 1);
+            if( CGameData.Instance.GetStage() < 11  )
+                CGameData.Instance.SetClearStage(CGameData.Instance.GetStage() + 1, 0);
             CUIInGame.Instance.ShowPopupFinish();
             CGameData.Instance.SetState(2);
             return;
@@ -205,6 +199,19 @@ public class CGameEngine : MonoBehaviour
     {
         CGameData.Instance.SetPlayTime(0);
 
+        m_nStage = CGameData.Instance.GetStage();
+
+        for(int i = 0; i < m_listStageRoad.Length; i++)
+        {
+            m_listStageRoad[i].GetComponent<SpriteRenderer>().sprite = CObjectManager.Instance.GetRoad(CGameData.Instance.GetStage()).GetComponent<SpriteRenderer>().sprite;
+        }
+
+        for(int i = 0; i < m_listBG.Length; i++)
+        {
+            m_listBG[i].GetComponent<SpriteRenderer>().sprite = CObjectManager.Instance.GetBG(CGameData.Instance.GetStage()).GetComponent<SpriteRenderer>().sprite;
+        }
+
+
         m_uiManager.ShowUI(1);
         CObjectManager.Instance.InitKeyItem(m_nStage);        
 
@@ -213,8 +220,10 @@ public class CGameEngine : MonoBehaviour
 
         SetHP(3);
         SetKeyCount(0);
-        SetStarPoint(0);
+        // CGameData.Instance.
+        // SetStarPoint(0);
 
+        CUIInGame.Instance.UpdateStarPoint();
         CUIInGame.Instance.UpdateKeyCount();
 
         // CUIInGame.Instance.ShowPopupGameStart();
@@ -295,25 +304,16 @@ public class CGameEngine : MonoBehaviour
         return nAddCount;
     }
 
-    public void SetStarPoint(int nPoint)
+    public void AddStarPoint(int nPoint = 10)
     {
-        m_nStarPoint = nPoint;
-        CUIInGame.Instance.UpdateStarPoint(m_nStarPoint);
-    }
+        // m_nStarPoint += nPoint;
+        // if( m_nStarPoint > 9999)
+        //     m_nStarPoint = 9999;
 
-    public int AddStarPoint(int nPoint = 10)
-    {
-        m_nStarPoint += nPoint;
-        if( m_nStarPoint > 9999)
-            m_nStarPoint = 9999;
+        CGameData.Instance.AddStar(nPoint);
 
-        CUIInGame.Instance.UpdateStarPoint(m_nStarPoint);
-        return m_nStarPoint;
-    }
-
-    public int GetStarPoint()
-    {
-        return m_nStarPoint;
+        // CUIInGame.Instance.UpdateStarPoint(m_nStarPoint);
+        CUIInGame.Instance.UpdateStarPoint();
     }
 
     public void Unbeatable()
@@ -340,19 +340,5 @@ public class CGameEngine : MonoBehaviour
         }
 
         return m_nHP;
-    }
-
-    public void SetKeyItem(int nStage, int nIndex, int nState)
-    {
-        m_listGetKey[nStage, nIndex] = nState;
-
-        string strKey = "Key" + nStage.ToString("00") + nIndex.ToString("00");
-        PlayerPrefs.SetInt(strKey, nState);
-    }
-
-    public int GetKeyItem(int nState, int nIndex)
-    {
-        Debug.Log(nState + " : " + nIndex);
-        return m_listGetKey[nState, nIndex];
     }
 }

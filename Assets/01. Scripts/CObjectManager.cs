@@ -51,10 +51,15 @@ public class CObjectManager : MonoBehaviour
     public GameObject m_goPuddieParent;
     public GameObject[] m_listPuddie = new GameObject[20];
 
+    public GameObject[] m_listRoads = new GameObject[11];
+    public GameObject[] m_listBGs = new GameObject[11];
+
     private int m_nStarCombo = 0;
     private int m_nStarHeight = 0;
 
     private int[] m_listKeyPoz = new int[7];
+
+    private int m_nKeyIndex = 0;
 
 
     // Start is called before the first frame update
@@ -226,7 +231,9 @@ public class CObjectManager : MonoBehaviour
             }
             m_listKey[nActiveIndex].SetActive(true);
             m_listKey[nActiveIndex].GetComponent<CObject>().CreateObject(vecCreatePoz);
-            m_listKey[nActiveIndex].GetComponent<CObject>().SetValue(nKeyIndex);
+            // m_listKey[nActiveIndex].GetComponent<CObject>().SetValue(nKeyIndex);
+            m_listKey[nActiveIndex].GetComponent<CObject>().SetValue(m_nKeyIndex);
+            m_nKeyIndex++;
             return;
         }
 
@@ -370,6 +377,16 @@ public class CObjectManager : MonoBehaviour
         for(int i = 0; i < m_listPuddie.Length; i++)
             if(m_listPuddie[i].activeSelf)
                 m_listPuddie[i].GetComponent<CObject>().HideObject();
+    }
+
+    public GameObject GetRoad(int nStage)
+    {
+        return m_listRoads[nStage];
+    }
+
+    public GameObject GetBG(int nStage)
+    {
+        return m_listBGs[nStage];
     }
 }
 

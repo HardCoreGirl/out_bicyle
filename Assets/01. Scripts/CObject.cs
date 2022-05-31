@@ -65,7 +65,7 @@ public class CObject : MonoBehaviour
             {
                 Debug.Log("Key Index : " + m_nValue);
 
-                CGameEngine.Instance.SetKeyItem(CGameEngine.Instance.GetStage(), m_nValue, 1);
+                CGameData.Instance.SetKeyItem(CGameEngine.Instance.GetStage(), m_nValue, 1);
                 CGameEngine.Instance.AddKeyCount();
                 // CUIInGame.Instance.ShowPopupGetKeyword(m_nValue);
                 CUIInGame.Instance.UpdateKeyCount();

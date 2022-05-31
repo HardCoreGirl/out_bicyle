@@ -55,6 +55,8 @@ public class CGameData : MonoBehaviour
     // 스테이지별 자전거 속도
     private float[] m_listStageSpeed = new float[11];
 
+    private string[] m_listStageTitle = new string[11];
+    private string[] m_listStageMsg = new string[11];
     private string[] m_listKeyIndex = new string[10];
     private string[,] m_listKeyMessage = new string[11, 10];
 
@@ -66,6 +68,13 @@ public class CGameData : MonoBehaviour
     private float m_fPlayTime = 0;
 
     private bool m_bIsLoad = false;
+
+    private int[] m_listClearStage = new int[11];
+    private int[,] m_listGetKey = new int[11, 7];
+
+    private int m_nStar = 0;
+
+    private int m_nLobbyIndex = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -84,8 +93,26 @@ public class CGameData : MonoBehaviour
             return;
 
         m_bIsLoad = true;
+
+        SetStage(0);
+
+        m_nStar = PlayerPrefs.GetInt("Star", 0);
         
-        SetStage(1);
+        string strKey = "";
+        for(int i = 0; i < 11; i++)
+        {
+            strKey = "Clear" + i.ToString("00");
+            m_listClearStage[i] = PlayerPrefs.GetInt(strKey, -1);
+
+            for(int j = 0; j < 7; j++)
+            {
+                strKey = "Key" + i.ToString("00") + j.ToString("00");
+                m_listGetKey[i, j] = PlayerPrefs.GetInt(strKey, -1);
+            }
+        }
+
+        if( GetClearStage(0) == -1 )
+            SetClearStage(0, 0);
 
         m_nRate[0] = 10000;
         m_nRate[1] = 1000;
@@ -117,6 +144,29 @@ public class CGameData : MonoBehaviour
         m_listStageSpeed[8] = 8f;
         m_listStageSpeed[9] = 8f;
         m_listStageSpeed[10] = 10f;
+
+        m_listStageTitle[0] = "튜토리얼";
+        m_listStageMsg[0] = "별 3개 속에 숨겨진 슬로건을 찾아보세요";
+        m_listStageTitle[1] = "Stage 1. 성경신학개론";
+        m_listStageMsg[1] = "성경을 신학적으로 읽어야 하는 6가지 이유를 찾아보세요";
+        m_listStageTitle[2] = "Stage2. 창세기로 보는 구속사";
+        m_listStageMsg[2] = "하나님께서 명령하신 정복명령 5가지는 무엇일까요?";
+        m_listStageTitle[3] = "Stage3. 베리트, 하나님의 언약";
+        m_listStageMsg[3] = "하나님이 아브라함을 통해 메시아를 보내겠다는\n언약이 담긴 창세기 15:4을 완성하세요";
+        m_listStageTitle[4] = "Stage4. 하나님의 왕권, 거룩한 계승";
+        m_listStageMsg[4] = "아담으로 시작된 하나님의 왕권 계승의 역사는 어떻게 될까요?";
+        m_listStageTitle[5] = "Stage5. 지혜로우신 예수그리스도";
+        m_listStageMsg[5] = "우리를 구원하기 위한 하나님의 3가지 지혜를 찾아보세요";
+        m_listStageTitle[6] = "Stage6. 이 시대의 선지자, 그리스도인";
+        m_listStageMsg[6] = "분량이 많은 선지서를 대선지서라고 합니다.\n열쇠 속에 숨긴 대선지서 5권을 찾아보세요";
+        m_listStageTitle[7] = "Stage7. 구속사의 정점, 메시아 공생애";
+        m_listStageMsg[7] = "4복음서의 수신자는 누구일까요?";
+        m_listStageTitle[8] = "Stage8. 성도의 참 위로자이신 예수님";
+        m_listStageMsg[8] = "바울이 감옥에서 쓴 서신을 옥중서신이라고 합니다.\n열쇠 속에 숨겨진 옥중서신 4권과 그 특징을 찾아보세요.";
+        m_listStageTitle[9] = "Stage9. 반드시 다시 오실 예수님";
+        m_listStageMsg[9] = "초림을 먼저 알았던 사람들은 누구일까요?";
+        m_listStageTitle[10] = "Stage10. 말씀으로 담대하고 거침없이";
+        m_listStageMsg[10] = "담대하고 거침없이 산다는 것은 어떤 삶일까요?";
 
         m_listKeyIndex[0] = "첫번째 이유";
         m_listKeyIndex[1] = "두번째 이유";
@@ -256,7 +306,87 @@ public class CGameData : MonoBehaviour
         return m_listKeyMessage[nStage, nIndex];
     }
 
+    public string GetStageTitle(int nStage)
+    {
+        return m_listStageTitle[nStage];
+    }
+
+    public string GetStageMsg(int nStage)
+    {
+        return m_listStageMsg[nStage];
+    }
+
     //-------------------------------------------
+    public void SetStar(int nStar)
+    {
+        m_nStar = nStar;
+        PlayerPrefs.SetInt("Star", nStar);
+    }
+
+    public int GetStar()
+    {
+        return m_nStar;
+    }
+
+    public int AddStar(int nStar)
+    {
+        int nAddStar = GetStar() + nStar;
+        if( nAddStar > 9999 )
+            nAddStar = 9999;
+            
+        SetStar(nAddStar);
+        return nAddStar;
+    }
+
+    public int UseStar(int nStar)
+    {
+        int nUseStar = GetStar() - nStar;
+        if(nUseStar < 0)
+            return -1;
+
+        SetStar(nUseStar);
+
+        return nUseStar;
+    }
+
+    public void SetClearStage(int nStage, int nClear)
+    {
+        string strKey = "Clear" + nStage.ToString("00");
+
+        m_listClearStage[nStage] = nClear;
+
+        PlayerPrefs.SetInt(strKey, nClear);
+    }
+
+    public int GetClearStage(int nStage)
+    {
+        return m_listClearStage[nStage];
+    }
+
+    public void SetKeyItem(int nStage, int nIndex, int nState)
+    {
+        m_listGetKey[nStage, nIndex] = nState;
+
+        string strKey = "Key" + nStage.ToString("00") + nIndex.ToString("00");
+        PlayerPrefs.SetInt(strKey, nState);
+    }
+
+    public int GetKeyItem(int nState, int nIndex)
+    {
+        return m_listGetKey[nState, nIndex];
+    }
+
+    public int GetKeyCountInStage(int nStage)
+    {
+        int nCnt = 0;
+        for(int i = 0; i < 7; i++)   
+        {
+            if( m_listGetKey[nStage, i] >= 0 )
+                nCnt++;
+        }
+
+        return nCnt;
+    }
 
     public void SetPlayerIndex(int nIndex)
     {
@@ -304,4 +434,15 @@ public class CGameData : MonoBehaviour
         SetPlayTime(fAddTime);
         return fAddTime;
     }
+
+    public void SetLobbyIndex(int nIndex)
+    {
+        m_nLobbyIndex = nIndex;
+    }
+
+    public int GetLobbyIndex()
+    {
+        return m_nLobbyIndex;
+    }
 }
+

@@ -54,6 +54,11 @@ public class CUIInGame : MonoBehaviour
     public Text m_txtGetKeyMessage;
 
     public GameObject m_goPopupFinish;
+    public Text m_txtFinishStage;
+    public Text m_txtFinishKeyCnt;
+    public Text m_txtFinishGetKeyCnt;
+    public Text m_txtFinishPercent;
+
 
     public Slider m_sliderPlayer;
 
@@ -87,9 +92,9 @@ public class CUIInGame : MonoBehaviour
         m_txtKeyCount.text = CGameEngine.Instance.GetKeyCount().ToString() + " / " + CGameData.Instance.GetStageKeyCount(CGameEngine.Instance.GetStage());
     }
 
-    public void UpdateStarPoint(int nPoint)
+    public void UpdateStarPoint()
     {
-        m_txtStarPoint.text = nPoint.ToString();
+        m_txtStarPoint.text = CGameData.Instance.GetStar().ToString();
     }
 
     public void UpdatePlayBar(float fDist)
@@ -112,6 +117,8 @@ public class CUIInGame : MonoBehaviour
         m_goPopupGetKeyword.SetActive(true);
         m_txtGetKeyIndex.text = CGameData.Instance.GetKeyIndex(nIndex);
         m_txtGetKeyMessage.text = CGameData.Instance.GetKeyMessage(CGameData.Instance.GetStage(), nIndex);
+        m_txtFinishGetKeyCnt.text = CGameEngine.Instance.GetKeyCount().ToString() + " / " + CGameData.Instance.GetStageKeyCount(CGameEngine.Instance.GetStage()).ToString();
+        m_txtFinishPercent.text = ((int)((float)CGameEngine.Instance.GetKeyCount() / (float)CGameData.Instance.GetStageKeyCount(CGameEngine.Instance.GetStage()) * 100)).ToString() + "% 달성";
         // CGameData.instance.GetStage()
     }
 
@@ -123,6 +130,9 @@ public class CUIInGame : MonoBehaviour
     public void ShowPopupFinish()
     {
         m_goPopupFinish.SetActive(true);
+        m_txtFinishStage.text = "STAGE " + CGameData.Instance.GetStage().ToString() + " 결과";
+        m_txtFinishKeyCnt.text = "[Mission] 성경을 신학적으로 읽어야 하는 " + CGameData.Instance.GetStageKeyCount(CGameData.Instance.GetStage()).ToString() + "가지 이유를 찾아라!"; 
+
     }
 
     public void HidePopupFinish()
@@ -138,6 +148,22 @@ public class CUIInGame : MonoBehaviour
     public void OnClickRestart()
     {
         SceneManager.LoadScene("InGame");
+    }
+
+    public void OnClickNextStage()
+    {
+        int nNextStage = CGameData.Instance.GetStage() + 1;
+        if( nNextStage > 10 )
+            nNextStage = 10;
+        CGameData.Instance.SetStage(nNextStage);
+
+        SceneManager.LoadScene("InGame");
+    }
+
+    public void OnClickFinishGotoLobby(int nIndex)
+    {
+        CGameData.Instance.SetLobbyIndex(nIndex);
+        SceneManager.LoadScene("Lobby");
     }
 
     public void ShowPopupGameOver()

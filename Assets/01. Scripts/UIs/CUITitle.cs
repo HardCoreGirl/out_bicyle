@@ -46,7 +46,7 @@ public class CUITitle : MonoBehaviour
             string strKeyCount = "";
             for(int j = 0; j < nCount; j++)
             {
-                if( CGameEngine.Instance.GetKeyItem(i, j) == -1 )
+                if( CGameData.Instance.GetKeyItem(i, j) == -1 )
                     strKeyCount += "X ";
                 else
                     strKeyCount += "O ";
@@ -74,7 +74,7 @@ public class CUITitle : MonoBehaviour
         {
             for(int j = 0; j < 7; j++)
             {
-                CGameEngine.Instance.SetKeyItem(i, j, -1);
+                CGameData.Instance.SetKeyItem(i, j, -1);
             }
         }       
         SceneManager.LoadScene("InGame");
