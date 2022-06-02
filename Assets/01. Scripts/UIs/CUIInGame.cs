@@ -49,6 +49,8 @@ public class CUIInGame : MonoBehaviour
 
     public Text m_txtKeyCount;
 
+    public GameObject m_goPopupPause;
+
     public GameObject m_goPopupGetKeyword;
     public Text m_txtGetKeyIndex;
     public Text m_txtGetKeyMessage;
@@ -80,6 +82,7 @@ public class CUIInGame : MonoBehaviour
         m_goPopupGameOver.SetActive(false);
         m_goPopupGetKeyword.SetActive(false);
         HidePopupFinish();
+        HidePopupPause();
     }
 
     public void UpdateHP(int nHP)
@@ -112,6 +115,51 @@ public class CUIInGame : MonoBehaviour
         m_goPopupGameStart.SetActive(false);
     }
 
+    // Pause -----------------------------
+    public void ShowPopupPause()
+    {
+        m_goPopupPause.SetActive(true);
+        CGameEngine.Instance.Pause();
+    }
+
+    public void HidePopupPause()
+    {
+        m_goPopupPause.SetActive(false);
+        // Time.timeScale = 1;
+        CGameEngine.Instance.Restart();
+    }
+
+    public void OnClickPause()
+    {
+        ShowPopupPause();
+    }
+
+    public void OnClickReplayGameInPause()
+    {
+        HidePopupPause();
+    }
+
+    public void OnClickStartInPause()
+    {
+        HidePopupPause();
+
+        CGameData.Instance.SetState(2);
+        CGameEngine.Instance.GetPlayer().GetComponent<CPlayer>().GameOver();
+
+        SceneManager.LoadScene("InGame");
+    }
+
+    public void OnClickHomeInPause()
+    {
+        HidePopupPause();
+
+        CGameData.Instance.SetState(2);
+        CGameEngine.Instance.GetPlayer().GetComponent<CPlayer>().GameOver();
+
+        SceneManager.LoadScene("Lobby");
+    }
+
+    // Keyword ---------------------------
     public void ShowPopupGetKeyword(int nIndex)
     {
         m_goPopupGetKeyword.SetActive(true);

@@ -31,6 +31,9 @@ public class CUILobby : MonoBehaviour
     public Text m_txtKeywordKeyCnt;
     public GameObject[] m_listKeywordDetailKeyword = new GameObject[7];
 
+    // Keyword ------------------------------
+    public Text m_txtStarInShop;
+
     // Storage -------------------------------
     public GameObject m_goPopupSelect;
 
@@ -139,6 +142,12 @@ public class CUILobby : MonoBehaviour
         m_goKeywordDetail.SetActive(false);
     }
 
+    // Shop ----------------------------
+    public void OnClickBackInShop()
+    {
+        ShowUI(1);
+    }
+
     // Storage -------------------------
     public void OnClickBackInStorageBox()
     {
@@ -233,6 +242,12 @@ public class CUILobby : MonoBehaviour
                     m_listKeywordKey[i].SetActive(false);
                 }
             }
+        }
+        else if( nIndex == 3 )
+        {
+            // m_txtKeywordInShop.text = CGameData.Instance.GetKeyCountInStage(nStage).ToString() + " / " + CGameData.Instance.GetStageKeyCount(nStage).ToString();
+            // m_txtKeywordInShop.text = CGameData.Instance.GetStar
+            m_txtStarInShop.text = CGameData.Instance.GetStar().ToString();
         }
         else if( nIndex == 4 )
         {

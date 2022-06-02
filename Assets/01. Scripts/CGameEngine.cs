@@ -259,6 +259,18 @@ public class CGameEngine : MonoBehaviour
         Time.timeScale = 0;
     }
 
+    public void Pause()
+    {
+        m_lGetKeyTime = System.DateTime.Now.Ticks + 99999000000;
+
+        Time.timeScale = 0;
+    }
+
+    public void Restart()
+    {
+        m_lGetKeyTime = 0;
+    }
+
     public void SetStage(int nStage)
     {
         m_nStage = nStage;
