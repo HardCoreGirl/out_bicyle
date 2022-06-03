@@ -63,6 +63,7 @@ public class CUIInGame : MonoBehaviour
 
 
     public Slider m_sliderPlayer;
+    public GameObject m_goHandler;
 
     // Start is called before the first frame update
     void Start()
@@ -103,6 +104,7 @@ public class CUIInGame : MonoBehaviour
     public void UpdatePlayBar(float fDist)
     {
         m_sliderPlayer.value = fDist;
+        m_goHandler.transform.localPosition = new Vector3((525 * fDist) - 250, 8, 0);
     }
 
     public void ShowPopupGameStart()
@@ -131,16 +133,20 @@ public class CUIInGame : MonoBehaviour
 
     public void OnClickPause()
     {
+        CAudioManager.Instance.PlayButton();
+
         ShowPopupPause();
     }
 
     public void OnClickReplayGameInPause()
     {
+        CAudioManager.Instance.PlayButton();
         HidePopupPause();
     }
 
     public void OnClickStartInPause()
     {
+        CAudioManager.Instance.PlayButton();
         HidePopupPause();
 
         CGameData.Instance.SetState(2);
@@ -151,6 +157,8 @@ public class CUIInGame : MonoBehaviour
 
     public void OnClickHomeInPause()
     {
+        CAudioManager.Instance.PlayButton();
+
         HidePopupPause();
 
         CGameData.Instance.SetState(2);
@@ -195,11 +203,13 @@ public class CUIInGame : MonoBehaviour
 
     public void OnClickRestart()
     {
+        CAudioManager.Instance.PlayButton();
         SceneManager.LoadScene("InGame");
     }
 
     public void OnClickNextStage()
     {
+        CAudioManager.Instance.PlayButton();
         int nNextStage = CGameData.Instance.GetStage() + 1;
         if( nNextStage > 10 )
             nNextStage = 10;
@@ -210,6 +220,7 @@ public class CUIInGame : MonoBehaviour
 
     public void OnClickFinishGotoLobby(int nIndex)
     {
+        CAudioManager.Instance.PlayButton();
         CGameData.Instance.SetLobbyIndex(nIndex);
         SceneManager.LoadScene("Lobby");
     }

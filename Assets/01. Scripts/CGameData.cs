@@ -72,6 +72,8 @@ public class CGameData : MonoBehaviour
     private int[] m_listClearStage = new int[11];
     private int[,] m_listGetKey = new int[11, 7];
 
+    private int[] m_listBicycle = new int[3];
+
     private int m_nStar = 0;
 
     private int m_nLobbyIndex = 0;
@@ -96,6 +98,7 @@ public class CGameData : MonoBehaviour
 
         SetStage(0);
 
+        
         m_nStar = PlayerPrefs.GetInt("Star", 0);
         
         string strKey = "";
@@ -113,6 +116,12 @@ public class CGameData : MonoBehaviour
 
         if( GetClearStage(0) == -1 )
             SetClearStage(0, 0);
+
+        for(int i = 0; i < 3; i++)
+        {
+            strKey = "Bicycle" + i.ToString("00");
+            m_listBicycle[i] = PlayerPrefs.GetInt(strKey, 0);
+        }
 
         m_nRate[0] = 10000;
         m_nRate[1] = 1000;
@@ -386,6 +395,22 @@ public class CGameData : MonoBehaviour
         }
 
         return nCnt;
+    }
+
+    public void SetBicycle(int nIndex, int nState)
+    {
+        m_listBicycle[nIndex] = nState;
+
+        string strKey = "Bicycle" + nIndex.ToString("00");
+        PlayerPrefs.SetInt(strKey, nState);
+    }
+
+    public int GetBicycle(int nIndex)
+    {
+        if( nIndex == 0 )
+            return 1;
+
+        return m_listBicycle[nIndex];
     }
 
     public void SetPlayerIndex(int nIndex)

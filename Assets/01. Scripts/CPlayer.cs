@@ -90,6 +90,8 @@ public class CPlayer : MonoBehaviour
         string strAniName = "Jump" + (CGameData.Instance.GetPlayerIndex() + 3).ToString("000");
         m_ani.Play(strAniName);
 
+        CAudioManager.Instance.PlayJump();
+
         rd.velocity = Vector2.zero;
         Vector2 JumpVelocity = new Vector2(0, CGameData.Instance.GetJumpPower());
 

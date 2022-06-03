@@ -91,6 +91,8 @@ public class CGameEngine : MonoBehaviour
 
         // }
 
+        CAudioManager.Instance.PlayBGInGame();
+
         GameStart();
         
     }
@@ -116,7 +118,10 @@ public class CGameEngine : MonoBehaviour
         {
             CGameData.Instance.SetClearStage(CGameData.Instance.GetStage(), 1);
             if( CGameData.Instance.GetStage() < 11  )
-                CGameData.Instance.SetClearStage(CGameData.Instance.GetStage() + 1, 0);
+            {
+                if( CGameData.Instance.GetClearStage(CGameData.Instance.GetStage() + 1) < 0 ) 
+                    CGameData.Instance.SetClearStage(CGameData.Instance.GetStage() + 1, 0);
+            }
             CUIInGame.Instance.ShowPopupFinish();
             CGameData.Instance.SetState(2);
             return;

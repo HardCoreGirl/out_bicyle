@@ -54,16 +54,20 @@ public class CObject : MonoBehaviour
         {
             if( m_nIndex == 0 )
             {
+                CAudioManager.Instance.PlayGetStar();
                 CGameEngine.Instance.AddStarPoint();
             }else if( m_nIndex == 1 )
             {
                 CGameEngine.Instance.AddHP();
+                CAudioManager.Instance.PlayGetHeart();
             } else if (m_nIndex == 2 )
             {
+                CAudioManager.Instance.PlayGetShield();
                 CGameEngine.Instance.Unbeatable();
             } else if (m_nIndex == 3 )
             {
                 Debug.Log("Key Index : " + m_nValue);
+                CAudioManager.Instance.PlayGetKey();
 
                 CGameData.Instance.SetKeyItem(CGameEngine.Instance.GetStage(), m_nValue, 1);
                 CGameEngine.Instance.AddKeyCount();
@@ -79,6 +83,12 @@ public class CObject : MonoBehaviour
 
             } else if(m_nIndex >= 10 )
             {
+                if( m_nIndex == 10 )
+                {
+                    CAudioManager.Instance.PlayWood();
+                } else {
+                    CAudioManager.Instance.PlayWater();
+                }
                 CGameEngine.Instance.Damage();
             }
 

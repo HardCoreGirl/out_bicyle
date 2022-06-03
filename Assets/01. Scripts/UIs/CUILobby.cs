@@ -31,11 +31,16 @@ public class CUILobby : MonoBehaviour
     public Text m_txtKeywordKeyCnt;
     public GameObject[] m_listKeywordDetailKeyword = new GameObject[7];
 
-    // Keyword ------------------------------
+    // Shop ---------------------------------
     public Text m_txtStarInShop;
+    public GameObject m_goPopupBuy;
+    public GameObject[] m_goPrice = new GameObject[2];
+    private int m_nShopSelectIndex;
 
     // Storage -------------------------------
+    public Text m_txtStarInStorage;
     public GameObject m_goPopupSelect;
+    public GameObject[] m_goLock = new GameObject[2];
 
 
 
@@ -45,8 +50,10 @@ public class CUILobby : MonoBehaviour
     void Start()
     {
         CGameData.Instance.InitData();
-        
+
         ShowUI(CGameData.Instance.GetLobbyIndex());   
+
+        CAudioManager.Instance.PlayBGLobby();
     }
 
     // Update is called once per frame
@@ -62,32 +69,41 @@ public class CUILobby : MonoBehaviour
 
     public void OnClickStart()
     {
+        CAudioManager.Instance.PlayButton();
         // StartGame();
         ShowUI(1);
     }
 
     public void OnClickBackInState()
     {
+        CAudioManager.Instance.PlayButton();
         ShowUI(0);
     }
 
     public void OnClickKeywordInStage()
     {
+        CAudioManager.Instance.PlayButton();
         ShowUI(2);
     }
 
     public void OnClickShopInStage()
     {
+        CAudioManager.Instance.PlayButton();
         ShowUI(3);
     }
 
     public void OnClickStorageBoxInStage()
     {
+        CAudioManager.Instance.PlayButton();
         ShowUI(4);
     }
 
     public void OnClickPlayInStage(int nIndex)
     {
+        if( CGameData.Instance.GetClearStage(nIndex) < 0 )
+            return;
+
+        CAudioManager.Instance.PlayButton();
         // StartGame();
         CGameData.Instance.SetStage(nIndex);
         m_goPopupPlay.SetActive(true);
@@ -97,23 +113,31 @@ public class CUILobby : MonoBehaviour
 
     public void OnClickPlayInStagePopup()
     {
+        CAudioManager.Instance.PlayButton();
         m_goPopupPlay.SetActive(false);
         StartGame();
     }
 
     public void OnClickCanceInStagePopup()
     {
+        CAudioManager.Instance.PlayButton();
         m_goPopupPlay.SetActive(false);
     }
 
     // Keyword -------------------------
     public void OnClickBackInKeyword()
     {
+        CAudioManager.Instance.PlayButton();
         ShowUI(1);
     }
 
     public void OnClickDetailInKeyword(int nIndex)
     {
+        if( CGameData.Instance.GetClearStage(nIndex + 1) < 0 )
+            return;
+
+        CAudioManager.Instance.PlayButton();
+
         m_goKeywordMain.SetActive(false);
         m_goKeywordDetail.SetActive(true);
 
@@ -138,24 +162,82 @@ public class CUILobby : MonoBehaviour
 
     public void OnClickBackInKeywordDetail()
     {
+        CAudioManager.Instance.PlayButton();
         m_goKeywordMain.SetActive(true);
         m_goKeywordDetail.SetActive(false);
     }
 
     // Shop ----------------------------
+    public void UpdateShop()
+    {
+        m_txtStarInShop.text = CGameData.Instance.GetStar().ToString();
+
+        if( CGameData.Instance.GetBicycle(1) == 0 )
+        {
+            m_goPrice[0].SetActive(true);
+        } else {
+            m_goPrice[0].SetActive(false);
+        }
+
+        if( CGameData.Instance.GetBicycle(2) == 0 )
+        {
+            m_goPrice[1].SetActive(true);
+        } else {
+            m_goPrice[1].SetActive(false);
+        }
+    }
+
     public void OnClickBackInShop()
     {
+        CAudioManager.Instance.PlayButton();
         ShowUI(1);
+    }
+
+    public void OnClickBuyInShop(int nIndex)
+    {
+
+        if( CGameData.Instance.GetBicycle(nIndex) > 0 )
+            return;
+
+        CAudioManager.Instance.PlayButton();
+
+        m_nShopSelectIndex = nIndex;
+
+        m_goPopupBuy.SetActive(true);
+    }
+
+    public void OnClickBuyOKInShop()
+    {
+        if( CGameData.Instance.UseStar(3000) < 0 )
+            return;
+
+        CAudioManager.Instance.PlayButton();
+
+        CGameData.Instance.SetBicycle(m_nShopSelectIndex, 1);
+        UpdateShop();
+        m_goPopupBuy.SetActive(false);
+    }
+
+    public void OnClickCancleInShop()
+    {
+        CAudioManager.Instance.PlayButton();
+        m_goPopupBuy.SetActive(false);
     }
 
     // Storage -------------------------
     public void OnClickBackInStorageBox()
     {
+        CAudioManager.Instance.PlayButton();
         ShowUI(1);
     }
 
     public void OnClickSelectBicycleInStorageBox(int nIndex)
     {
+        if( CGameData.Instance.GetBicycle(nIndex) <= 0 )
+            return;
+
+        CAudioManager.Instance.PlayButton();
+
         m_nSelectBicycleIndex = nIndex;
         // CGameData.Instance.SetPlayerIndex(nIndex);
         // ShowUI(1);
@@ -164,6 +246,8 @@ public class CUILobby : MonoBehaviour
 
     public void OnClickSelectInStorageBox()
     {
+        CAudioManager.Instance.PlayButton();
+
         CGameData.Instance.SetPlayerIndex(m_nSelectBicycleIndex);
         m_goPopupSelect.SetActive(false);
         ShowUI(1);
@@ -171,6 +255,7 @@ public class CUILobby : MonoBehaviour
 
     public void OnClickCancelBicycleInStorageBox()
     {
+        CAudioManager.Instance.PlayButton();
         m_goPopupSelect.SetActive(false);
     }
 
@@ -245,13 +330,38 @@ public class CUILobby : MonoBehaviour
         }
         else if( nIndex == 3 )
         {
+            m_goPopupBuy.SetActive(false);
+
+            UpdateShop();
             // m_txtKeywordInShop.text = CGameData.Instance.GetKeyCountInStage(nStage).ToString() + " / " + CGameData.Instance.GetStageKeyCount(nStage).ToString();
             // m_txtKeywordInShop.text = CGameData.Instance.GetStar
-            m_txtStarInShop.text = CGameData.Instance.GetStar().ToString();
+
         }
         else if( nIndex == 4 )
         {
             m_goPopupSelect.SetActive(false);
+
+            m_txtStarInStorage.text = CGameData.Instance.GetStar().ToString();
+
+            if( CGameData.Instance.GetBicycle(1) == 0 )
+            {
+                m_goLock[0].SetActive(true);
+            } else {
+                m_goLock[0].SetActive(false);
+            }
+
+            if( CGameData.Instance.GetBicycle(2) == 0 )
+            {
+                m_goLock[1].SetActive(true);
+            } else {
+                m_goLock[1].SetActive(false);
+            }
         }
+    }
+
+    public void OnClickClearData()
+    {
+        PlayerPrefs.DeleteAll();
+        SceneManager.LoadScene("Lobby");
     }
 }
