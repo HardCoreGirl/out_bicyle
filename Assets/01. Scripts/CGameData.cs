@@ -133,7 +133,7 @@ public class CGameData : MonoBehaviour
         m_nRate[3] = 5000;
         m_nRate[4] = 5000;
 
-        m_listStageKeyCnt[0] = 2;
+        m_listStageKeyCnt[0] = 4;
         m_listStageKeyCnt[1] = 6;
         m_listStageKeyCnt[2] = 5;
         m_listStageKeyCnt[3] = 5;
@@ -158,7 +158,7 @@ public class CGameData : MonoBehaviour
         m_listStageSpeed[10] = 10f;
 
         m_listStageTitle[0] = "튜토리얼";
-        m_listStageMsg[0] = "별 3개 속에 숨겨진 슬로건을 찾아보세요";
+        m_listStageMsg[0] = "별 4개 속에 숨겨진 슬로건을 찾아보세요";
         m_listStageTitle[1] = "Stage 1. 성경신학개론";
         m_listStageMsg[1] = "성경을 신학적으로 읽어야 하는 6가지 이유를 찾아보세요";
         m_listStageTitle[2] = "Stage2. 창세기로 보는 구속사";

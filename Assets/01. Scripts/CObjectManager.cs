@@ -132,6 +132,8 @@ public class CObjectManager : MonoBehaviour
         {
             m_listKeyPoz[0] = 70;
             m_listKeyPoz[1] = 90;
+            m_listKeyPoz[2] = 110;
+            m_listKeyPoz[3] = 130;
             return;
         }
 

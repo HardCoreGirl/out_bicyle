@@ -200,7 +200,7 @@ public class CGameEngine : MonoBehaviour
         m_nStage = CGameData.Instance.GetStage();
 
         if( CGameData.Instance.GetStage() == 0 )
-            m_fStageTime = 15f;
+            m_fStageTime = 20f;
         else
             m_fStageTime = 60f;
 
