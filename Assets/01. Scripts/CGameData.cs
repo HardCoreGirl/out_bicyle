@@ -78,6 +78,9 @@ public class CGameData : MonoBehaviour
 
     private int m_nLobbyIndex = 0;
 
+    private bool m_bIsTutorialGetStar = false;
+    private bool m_bIsTutorialJump = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -177,16 +180,16 @@ public class CGameData : MonoBehaviour
         m_listStageTitle[10] = "Stage10. 말씀으로 담대하고 거침없이";
         m_listStageMsg[10] = "담대하고 거침없이 산다는 것은 어떤 삶일까요?";
 
-        m_listKeyIndex[0] = "첫번째 이유";
-        m_listKeyIndex[1] = "두번째 이유";
-        m_listKeyIndex[2] = "세번째 이유";
-        m_listKeyIndex[3] = "네번째 이유";
-        m_listKeyIndex[4] = "다섯번째 이유";
-        m_listKeyIndex[5] = "여섯번째 이유";
-        m_listKeyIndex[6] = "일곱번째 이유";
-        m_listKeyIndex[7] = "여덜번째 이유";
-        m_listKeyIndex[8] = "아홉번째 이유";
-        m_listKeyIndex[9] = "열번째 이유";
+        m_listKeyIndex[0] = "첫번째 키워드";
+        m_listKeyIndex[1] = "두번째 키워드";
+        m_listKeyIndex[2] = "세번째 키워드";
+        m_listKeyIndex[3] = "네번째 키워드";
+        m_listKeyIndex[4] = "다섯번째 키워드";
+        m_listKeyIndex[5] = "여섯번째 키워드";
+        m_listKeyIndex[6] = "일곱번째 키워드";
+        m_listKeyIndex[7] = "여덜번째 키워드";
+        m_listKeyIndex[8] = "아홉번째 키워드";
+        m_listKeyIndex[9] = "열번째 키워드";
 
         m_listKeyMessage[0, 0] = "영의 건강";
         m_listKeyMessage[0, 1] = "육의 건강";
@@ -468,6 +471,26 @@ public class CGameData : MonoBehaviour
     public int GetLobbyIndex()
     {
         return m_nLobbyIndex;
+    }
+    
+    public void SetIsTutorialGetStar(bool bIsTutorial)
+    {
+        m_bIsTutorialGetStar = bIsTutorial;
+    }
+
+    public bool IsTutorialGetStar()
+    {
+        return m_bIsTutorialGetStar;
+    }
+
+    public void SetIsTutorialJump(bool bIsTutorial)
+    {
+        m_bIsTutorialJump = bIsTutorial;
+    }
+
+    public bool IsTutorialJump()
+    {
+        return m_bIsTutorialJump;
     }
 }
 

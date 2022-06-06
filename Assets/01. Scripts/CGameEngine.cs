@@ -70,6 +70,8 @@ public class CGameEngine : MonoBehaviour
 
     private int m_nGetKeyIndex = 0;
 
+    private float m_fStageTime = 60f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -104,6 +106,10 @@ public class CGameEngine : MonoBehaviour
         {
             if( System.DateTime.Now.Ticks > m_lGetKeyTime )
             {
+                Debug.Log("Stop Pause");
+                if( CGameData.Instance.GetStage() == 0 )
+                    CUIInGame.Instance.HideTutorial();
+
                 CUIInGame.Instance.HidePopupGetKeyword();
                 Time.timeScale = 1;
             }
@@ -113,8 +119,9 @@ public class CGameEngine : MonoBehaviour
         if( CGameData.Instance.GetState() != 1 )
             return;
 
+        
     
-        if( CGameData.Instance.AddPlayTime(Time.deltaTime) >= 60f )
+        if( CGameData.Instance.AddPlayTime(Time.deltaTime) >= m_fStageTime )
         {
             CGameData.Instance.SetClearStage(CGameData.Instance.GetStage(), 1);
             if( CGameData.Instance.GetStage() < 11  )
@@ -127,7 +134,7 @@ public class CGameEngine : MonoBehaviour
             return;
         }
 
-        CUIInGame.Instance.UpdatePlayBar(CGameData.Instance.GetPlayTime() / 60f);
+        CUIInGame.Instance.UpdatePlayBar(CGameData.Instance.GetPlayTime() / m_fStageTime);
 
         m_fPlayerXPoz = m_goActivePlayer.transform.position.x;
 
@@ -140,38 +147,24 @@ public class CGameEngine : MonoBehaviour
             m_goBGManager.GetComponent<CBGManager>().UpdateBG();
         }
 
+        if( CGameData.Instance.GetStage() == 0 )
+        {
+            if( m_nPlayerPozIndex == 46 )
+            {
+                if( !CGameData.Instance.IsTutorialJump() )
+                {
+                    CGameData.Instance.SetIsTutorialJump(true);
+                    CUIInGame.Instance.ShowTutorial(1);
+                    Pause();
+                }
+            }
+        }
+
         // m_vecCameraPoz = Camera.main.transform.position;
         // m_vecCameraPoz.x = m_fPlayerXPoz + 3;
         // Camera.main.transform.position = m_vecCameraPoz;
 
         Camera.main.transform.position += new Vector3(1, 0, 0) * CGameData.Instance.GetBicyleSpeed() * Time.deltaTime;
-    }
-
-    void FixedUpdate()
-    {
-        // if( m_nState != 1 )
-        //     return;
-
-        // m_fPlayerXPoz = m_goActivePlayer.transform.position.x;
-
-        // if( (int)m_fPlayerXPoz > m_nPlayerPozIndex )
-        // {
-        //     m_nPlayerPozIndex = (int)m_fPlayerXPoz;
-        //     GameObject goRoad = Instantiate(Resources.Load("Prefabs/Roads/road01") as GameObject);
-        //     // m_goRoadParents.transform = goRoad.transform.parent;
-        //     goRoad.transform.SetParent(m_goRoadParents.transform);
-        //     goRoad.transform.position = new Vector3(14 + m_nPlayerPozIndex, 0, 0);
-
-        //     GetComponent<CObjectManager>().CreateObject(new Vector3(m_nPlayerPozIndex + 14, 0, 0));
-
-        //     GetComponent<CObjectManager>().HideObject();
-
-        //     m_goBGManager.GetComponent<CBGManager>().UpdateBG();
-        // }
-
-        // m_vecCameraPoz = Camera.main.transform.position;
-        // m_vecCameraPoz.x = m_fPlayerXPoz + 3;
-        // Camera.main.transform.position = m_vecCameraPoz;
     }
 
     public void SetState(int nState)
@@ -205,6 +198,11 @@ public class CGameEngine : MonoBehaviour
         CGameData.Instance.SetPlayTime(0);
 
         m_nStage = CGameData.Instance.GetStage();
+
+        if( CGameData.Instance.GetStage() == 0 )
+            m_fStageTime = 15f;
+        else
+            m_fStageTime = 60f;
 
         for(int i = 0; i < m_listStageRoad.Length; i++)
         {
@@ -304,6 +302,11 @@ public class CGameEngine : MonoBehaviour
         return m_nHP;
     }
 
+    public void ResetPause()
+    {
+        m_lGetKeyTime = 0;
+    }
+
     public void SetKeyCount(int nCount)
     {
         m_nGetKeyCnt = nCount;
@@ -323,6 +326,16 @@ public class CGameEngine : MonoBehaviour
 
     public void AddStarPoint(int nPoint = 10)
     {
+        if( CGameData.Instance.GetStage() == 0 )
+        {
+            if( !CGameData.Instance.IsTutorialGetStar() )
+            {
+                CUIInGame.Instance.ShowTutorial(0);
+                CGameData.Instance.SetIsTutorialGetStar(true);
+                m_lGetKeyTime = System.DateTime.Now.Ticks + 15000000;
+                Time.timeScale = 0;
+            }
+        }
         // m_nStarPoint += nPoint;
         // if( m_nStarPoint > 9999)
         //     m_nStarPoint = 9999;

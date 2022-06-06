@@ -65,6 +65,9 @@ public class CUIInGame : MonoBehaviour
     public Slider m_sliderPlayer;
     public GameObject m_goHandler;
 
+    public GameObject m_goBoardTutoiral;
+    public GameObject[] m_listTutorial = new GameObject[2];
+
     // Start is called before the first frame update
     void Start()
     {
@@ -79,6 +82,7 @@ public class CUIInGame : MonoBehaviour
 
     public void InitUI()
     {
+        HideTutorial();
         HidePopupGameStart();
         m_goPopupGameOver.SetActive(false);
         m_goPopupGetKeyword.SetActive(false);
@@ -198,6 +202,11 @@ public class CUIInGame : MonoBehaviour
 
     public void OnClickJump()
     {
+        if( CGameData.Instance.GetStage() == 0 )
+        {
+            if( !CGameData.Instance.IsTutorialJump() )
+                return;
+        }
         CGameEngine.Instance.GetPlayer().GetComponent<CPlayer>().Jump();
     }
 
@@ -228,5 +237,31 @@ public class CUIInGame : MonoBehaviour
     public void ShowPopupGameOver()
     {
         m_goPopupGameOver.SetActive(true);
+    }
+
+    // Tutorial -----------------------
+    public void ShowTutorial(int nIndex)
+    {
+        m_goBoardTutoiral.SetActive(true);
+
+        for(int i = 0; i < m_listTutorial.Length; i++)
+        {
+            m_listTutorial[i].SetActive(false);
+        }
+
+        m_listTutorial[nIndex].SetActive(true);
+    }
+
+    public void HideTutorial()
+    {
+        m_goBoardTutoiral.SetActive(false);
+    }
+
+    public void OnClickJumpInTutorial()
+    {
+        Debug.Log("OnClickJumpInTutorial");
+        CGameEngine.Instance.Restart();
+        // HideTutorial();
+        OnClickJump();
     }
 }

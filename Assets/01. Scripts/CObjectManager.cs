@@ -128,6 +128,13 @@ public class CObjectManager : MonoBehaviour
         int nKeyCount = 0;
         int nDist = 0;
 
+        if( nStage == 0 )
+        {
+            m_listKeyPoz[0] = 70;
+            m_listKeyPoz[1] = 90;
+            return;
+        }
+
         nKeyCount = CGameData.Instance.GetStageKeyCount(nStage);
         nDist = CGameData.Instance.GetDistance(CGameData.Instance.GetStageSpeed(nStage));
         
@@ -145,6 +152,8 @@ public class CObjectManager : MonoBehaviour
         //     case 9: nKeyCount = 4; nDist = 485; break;
         //     case 10:    nKeyCount = 7;  nDist = 600; break;
         // }
+
+        
 
         int nIndex = 0;
         while(true)
@@ -247,13 +256,31 @@ public class CObjectManager : MonoBehaviour
             nObjectIndex = 0;
             nHeight = m_nStarHeight;
         } else {
-            for(int i = 0; i < CGameData.Instance.GetRateCnt(); i++)
+            if( CGameData.Instance.GetStage() == 0 )
             {
-                nTotalRate += CGameData.Instance.GetRate(i);
-                if( nRandomValue < nTotalRate )
+                nObjectIndex = -1;
+
+                Debug.Log("NowPoz : " + nNowPoz);
+
+                if(nNowPoz == 30)
                 {
-                    nObjectIndex = i;
-                    break;
+                    nObjectIndex = 0;
+                } else if( nNowPoz == 50) 
+                {
+                    nObjectIndex = 3;
+                } else if( nNowPoz == 70 )
+                {
+
+                }
+            } else {
+                for(int i = 0; i < CGameData.Instance.GetRateCnt(); i++)
+                {
+                    nTotalRate += CGameData.Instance.GetRate(i);
+                    if( nRandomValue < nTotalRate )
+                    {
+                        nObjectIndex = i;
+                        break;
+                    }
                 }
             }
 
@@ -262,6 +289,9 @@ public class CObjectManager : MonoBehaviour
             
             if( nObjectIndex < 2)
                 nHeight = Random.Range(0, 3);
+
+            if( CGameData.Instance.GetStage() == 0 && nNowPoz < 70 )
+                nHeight = 0;
         }
 
         vecCreatePoz.y = 0.7f + ((float)nHeight * 1.2f);
@@ -271,7 +301,10 @@ public class CObjectManager : MonoBehaviour
         {
             if( m_nStarCombo <= 0 )
             {
-                m_nStarCombo = Random.Range(3, 5);
+                if( CGameData.Instance.GetStage() == 0 )
+                    m_nStarCombo = 5;
+                else
+                    m_nStarCombo = Random.Range(3, 5);
                 m_nStarHeight = nHeight;
             }
 
