@@ -80,6 +80,7 @@ public class CGameData : MonoBehaviour
 
     private bool m_bIsTutorialGetStar = false;
     private bool m_bIsTutorialJump = false;
+    private bool m_bIsTutorialKey = false;
 
     // Start is called before the first frame update
     void Start()
@@ -158,7 +159,7 @@ public class CGameData : MonoBehaviour
         m_listStageSpeed[10] = 10f;
 
         m_listStageTitle[0] = "튜토리얼";
-        m_listStageMsg[0] = "별 4개 속에 숨겨진 슬로건을 찾아보세요";
+        m_listStageMsg[0] = "열쇠 4개 속에 숨겨진 슬로건을 찾아보세요";
         m_listStageTitle[1] = "Stage 1. 성경신학개론";
         m_listStageMsg[1] = "성경을 신학적으로 읽어야 하는 6가지 이유를 찾아보세요";
         m_listStageTitle[2] = "Stage2. 창세기로 보는 구속사";
@@ -491,6 +492,23 @@ public class CGameData : MonoBehaviour
     public bool IsTutorialJump()
     {
         return m_bIsTutorialJump;
+    }
+
+    public void SetIsTutorialKey(bool bIsTutorial)
+    {
+        m_bIsTutorialKey = bIsTutorial;
+    }    
+
+    public bool IsTutorialKey()
+    {
+        return m_bIsTutorialKey;
+    }
+
+    public void InitTutorial()
+    {
+        m_bIsTutorialGetStar = false;
+        m_bIsTutorialJump = false;
+        m_bIsTutorialKey = false;
     }
 }
 

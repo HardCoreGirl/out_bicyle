@@ -42,6 +42,7 @@ public class CUIInGame : MonoBehaviour
     public GameObject m_goPopupGameStart;
 
     public GameObject m_goPopupGameOver;
+    public GameObject m_goPopupGameClear;
 
     public Text m_txtHP;
 
@@ -66,7 +67,7 @@ public class CUIInGame : MonoBehaviour
     public GameObject m_goHandler;
 
     public GameObject m_goBoardTutoiral;
-    public GameObject[] m_listTutorial = new GameObject[2];
+    public GameObject[] m_listTutorial = new GameObject[3];
 
     // Start is called before the first frame update
     void Start()
@@ -85,6 +86,7 @@ public class CUIInGame : MonoBehaviour
         HideTutorial();
         HidePopupGameStart();
         m_goPopupGameOver.SetActive(false);
+        HidePopupGameClear();
         m_goPopupGetKeyword.SetActive(false);
         HidePopupFinish();
         HidePopupPause();
@@ -184,6 +186,18 @@ public class CUIInGame : MonoBehaviour
 
     public void HidePopupGetKeyword()
     {
+        if( m_goPopupGetKeyword.activeSelf )
+        {
+            if(CGameData.Instance.GetStage() == 0)
+            {
+                if( CGameData.Instance.IsTutorialGetStar() && !CGameData.Instance.IsTutorialKey() )
+                {
+                    CGameData.Instance.SetIsTutorialKey(true);
+                    CGameEngine.Instance.PauseGetKeyTutorial();
+                    ShowTutorial(2);
+                }
+            }
+        }
         m_goPopupGetKeyword.SetActive(false);
     }
 
@@ -237,6 +251,28 @@ public class CUIInGame : MonoBehaviour
     public void ShowPopupGameOver()
     {
         m_goPopupGameOver.SetActive(true);
+    }
+
+    public void ShowPopupGameClear()
+    {
+        m_goPopupGameClear.SetActive(true);
+
+        StartCoroutine("ProcessGameClear");
+        //            CUIInGame.Instance.ShowPopupFinish();
+        //            CGameData.Instance.SetState(2);
+    }
+
+    IEnumerator ProcessGameClear()
+    {
+        yield return new WaitForSeconds(1.5f);
+        HidePopupGameClear();
+        ShowPopupFinish();
+        CGameData.Instance.SetState(2);
+    }
+
+    public void HidePopupGameClear()
+    {
+        m_goPopupGameClear.SetActive(false);
     }
 
     // Tutorial -----------------------

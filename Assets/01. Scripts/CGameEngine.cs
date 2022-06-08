@@ -106,12 +106,14 @@ public class CGameEngine : MonoBehaviour
         {
             if( System.DateTime.Now.Ticks > m_lGetKeyTime )
             {
-                Debug.Log("Stop Pause");
-                if( CGameData.Instance.GetStage() == 0 )
+                if (CGameData.Instance.GetStage() == 0)
+                {
                     CUIInGame.Instance.HideTutorial();
+                }
+
+                Time.timeScale = 1;
 
                 CUIInGame.Instance.HidePopupGetKeyword();
-                Time.timeScale = 1;
             }
         }
         // rb.transform.position += new Vector3(1, 0, 0) * 0.4f * Time.deltaTime;
@@ -129,8 +131,9 @@ public class CGameEngine : MonoBehaviour
                 if( CGameData.Instance.GetClearStage(CGameData.Instance.GetStage() + 1) < 0 ) 
                     CGameData.Instance.SetClearStage(CGameData.Instance.GetStage() + 1, 0);
             }
-            CUIInGame.Instance.ShowPopupFinish();
-            CGameData.Instance.SetState(2);
+            CUIInGame.Instance.ShowPopupGameClear();
+//            CUIInGame.Instance.ShowPopupFinish();
+//            CGameData.Instance.SetState(2);
             return;
         }
 
@@ -199,9 +202,11 @@ public class CGameEngine : MonoBehaviour
 
         m_nStage = CGameData.Instance.GetStage();
 
-        if( CGameData.Instance.GetStage() == 0 )
+        if (CGameData.Instance.GetStage() == 0)
+        {
             m_fStageTime = 20f;
-        else
+            CGameData.Instance.InitTutorial();
+        } else
             m_fStageTime = 60f;
 
         for(int i = 0; i < m_listStageRoad.Length; i++)
@@ -258,6 +263,13 @@ public class CGameEngine : MonoBehaviour
         
         CUIInGame.Instance.ShowPopupGetKeyword(m_nGetKeyIndex);
         m_lGetKeyTime = System.DateTime.Now.Ticks + 15000000;
+
+        Time.timeScale = 0;
+    }
+
+    public void PauseGetKeyTutorial()
+    {
+        m_lGetKeyTime = System.DateTime.Now.Ticks + 30000000;
 
         Time.timeScale = 0;
     }
@@ -330,9 +342,9 @@ public class CGameEngine : MonoBehaviour
         {
             if( !CGameData.Instance.IsTutorialGetStar() )
             {
-                CUIInGame.Instance.ShowTutorial(0);
                 CGameData.Instance.SetIsTutorialGetStar(true);
-                m_lGetKeyTime = System.DateTime.Now.Ticks + 15000000;
+                CUIInGame.Instance.ShowTutorial(0);
+                m_lGetKeyTime = System.DateTime.Now.Ticks + 30000000;
                 Time.timeScale = 0;
             }
         }
