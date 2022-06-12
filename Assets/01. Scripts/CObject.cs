@@ -56,7 +56,8 @@ public class CObject : MonoBehaviour
             {
                 CAudioManager.Instance.PlayGetStar();
                 CGameEngine.Instance.AddStarPoint();
-            }else if( m_nIndex == 1 )
+            }
+            else if( m_nIndex == 1 )
             {
                 CGameEngine.Instance.AddHP();
                 CAudioManager.Instance.PlayGetHeart();

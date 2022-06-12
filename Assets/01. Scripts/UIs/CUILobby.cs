@@ -36,6 +36,8 @@ public class CUILobby : MonoBehaviour
     public GameObject m_goPopupBuy;
     public GameObject[] m_goPrice = new GameObject[2];
     private int m_nShopSelectIndex;
+    public GameObject m_goPopupConfirm;
+    public Text m_txtConfirm;
 
     // Storage -------------------------------
     public Text m_txtStarInStorage;
@@ -195,11 +197,22 @@ public class CUILobby : MonoBehaviour
 
     public void OnClickBuyInShop(int nIndex)
     {
+        CAudioManager.Instance.PlayButton();
 
-        if( CGameData.Instance.GetBicycle(nIndex) > 0 )
+        if (CGameData.Instance.GetBicycle(nIndex) > 0)
             return;
 
-        CAudioManager.Instance.PlayButton();
+        int nPrice = 0;
+        if (nIndex == 1)
+            nPrice = 7000;
+        else if (nIndex == 2)
+            nPrice = 20000;
+
+        if (CGameData.Instance.GetStar() < nPrice)
+        {
+            ShowPopupConfirm(1);
+            return;
+        }
 
         m_nShopSelectIndex = nIndex;
 
@@ -208,20 +221,58 @@ public class CUILobby : MonoBehaviour
 
     public void OnClickBuyOKInShop()
     {
-        if( CGameData.Instance.UseStar(3000) < 0 )
+        int nPrice = 0;
+
+        if (m_nShopSelectIndex == 1)
+            nPrice = 7000;
+        else if (m_nShopSelectIndex == 2)
+            nPrice = 20000;
+
+        Debug.Log("MyStar : " + CGameData.Instance.GetStar());
+
+        if (CGameData.Instance.UseStar(nPrice) < 0)
+        {
+            Debug.Log("MyStar : " + CGameData.Instance.GetStar());
+            ShowPopupConfirm(1);
             return;
+        }
 
         CAudioManager.Instance.PlayButton();
 
         CGameData.Instance.SetBicycle(m_nShopSelectIndex, 1);
         UpdateShop();
         m_goPopupBuy.SetActive(false);
+
+        ShowPopupConfirm(0);
     }
 
     public void OnClickCancleInShop()
     {
         CAudioManager.Instance.PlayButton();
         m_goPopupBuy.SetActive(false);
+    }
+
+    public void ShowPopupConfirm(int nIndex)
+    {
+        m_goPopupConfirm.SetActive(true);
+
+        string strMsg = "구매가 완료되었습니다.";
+
+        if( nIndex == 1 )
+            strMsg = "별이 부족합니다.";
+
+        m_txtConfirm.text = strMsg;
+    }
+
+    public void HidePopupConfirm()
+    {
+        m_goPopupConfirm.SetActive(false);
+    }
+
+    public void OnCliekOkInConfirm()
+    {
+        CAudioManager.Instance.PlayButton();
+        HidePopupConfirm();
     }
 
     // Storage -------------------------
@@ -331,6 +382,7 @@ public class CUILobby : MonoBehaviour
         else if( nIndex == 3 )
         {
             m_goPopupBuy.SetActive(false);
+            m_goPopupConfirm.SetActive(false);
 
             UpdateShop();
             // m_txtKeywordInShop.text = CGameData.Instance.GetKeyCountInStage(nStage).ToString() + " / " + CGameData.Instance.GetStageKeyCount(nStage).ToString();

@@ -102,6 +102,8 @@ public class CGameData : MonoBehaviour
 
         SetStage(0);
 
+        //SetStar(99999);
+
         
         m_nStar = PlayerPrefs.GetInt("Star", 0);
         
@@ -344,8 +346,8 @@ public class CGameData : MonoBehaviour
     public int AddStar(int nStar)
     {
         int nAddStar = GetStar() + nStar;
-        if( nAddStar > 9999 )
-            nAddStar = 9999;
+        if( nAddStar > 99999 )
+            nAddStar = 99999;
             
         SetStar(nAddStar);
         return nAddStar;

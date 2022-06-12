@@ -26,6 +26,8 @@ public class CPlayer : MonoBehaviour
 
     private bool m_bIsUnbeatable = false;
 
+    private int m_nUnbeatable = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -121,7 +123,12 @@ public class CPlayer : MonoBehaviour
 
     public bool IsUnbeatable()
     {
-        return m_bIsUnbeatable;
+        if (m_nUnbeatable > 0)
+            return true;
+
+        return false;
+            
+        // return m_bIsUnbeatable;
     }
 
     public void Unbeatable()
@@ -131,13 +138,18 @@ public class CPlayer : MonoBehaviour
 
     IEnumerator ProcessUnbeatable()
     {
-        m_bIsUnbeatable = true;
+        //m_bIsUnbeatable = true;
+
+        m_nUnbeatable++;
 
         m_goUnbeatable.SetActive(true);
 
         yield return new WaitForSeconds(5f);
 
-        m_goUnbeatable.SetActive(false);
+        if( m_nUnbeatable <= 1 )
+            m_goUnbeatable.SetActive(false);
+
+        m_nUnbeatable--;
 
         // float fTime = 0;
         // SpriteRenderer[] spr = GetComponentsInChildren<SpriteRenderer>();
@@ -168,6 +180,6 @@ public class CPlayer : MonoBehaviour
         //     spr[i].color = new Color(1, 1, 1, 1);
         // }
 
-        m_bIsUnbeatable = false;
+        //m_bIsUnbeatable = false;
     }
 }
