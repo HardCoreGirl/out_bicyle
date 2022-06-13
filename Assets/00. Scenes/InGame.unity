@@ -5290,6 +5290,21 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4984132087185726352, guid: e22d363fe3cba40609efda191c3de37e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4995357572485016787, guid: e22d363fe3cba40609efda191c3de37e, type: 3}
+      propertyPath: m_Text
+      value: "\uBC14\uC6B8\uC774 \uAC10\uC625\uC5D0\uC11C \uC4F4 \uC11C\uC2E0\uC744
+        \uC625\uC911\uC11C\uC2E0\uC774\uB77C\uACE0\uD569\uB2C8\uB2E4.\n\uC5F4\uC1E0\uC18D\uC5D0
+        \uC228\uACA8\uC9C4 \uC625\uC911\uC11C\uC2E0 4\uAD8C\uACFC \uADF8 \uD2B9\uC9D5\uC744
+        \uCC3E\uC544\uBCF4\uC138\uC694."
+      objectReference: {fileID: 0}
+    - target: {fileID: 4995357572485016787, guid: e22d363fe3cba40609efda191c3de37e, type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 6054319042649547960, guid: e22d363fe3cba40609efda191c3de37e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -5298,6 +5313,18 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 7333696494027198313}
+    - target: {fileID: 9029761252256650562, guid: e22d363fe3cba40609efda191c3de37e, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1200
+      objectReference: {fileID: 0}
+    - target: {fileID: 9029761252256650562, guid: e22d363fe3cba40609efda191c3de37e, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 9029761252256650562, guid: e22d363fe3cba40609efda191c3de37e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e22d363fe3cba40609efda191c3de37e, type: 3}
 --- !u!1 &530070653
@@ -8574,7 +8601,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 204245583072780119, guid: 2b11d10972e524026a2b64a836f2ac69, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 665373677034935227, guid: 2b11d10972e524026a2b64a836f2ac69, type: 3}
       propertyPath: m_IsActive
@@ -16572,7 +16599,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2974610505463997185, guid: 40582d0f14af64ae1992b58597691d4d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7773019082232165765, guid: 40582d0f14af64ae1992b58597691d4d, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 210
+      objectReference: {fileID: 0}
+    - target: {fileID: 7773019082232165765, guid: 40582d0f14af64ae1992b58597691d4d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -70
+      objectReference: {fileID: 0}
+    - target: {fileID: 8643257769625628035, guid: 40582d0f14af64ae1992b58597691d4d, type: 3}
+      propertyPath: m_Text
+      value: "\uACE8\uB85C\uC0C8\uC11C: \uC138\uC0C1\uC758 \uAC00\uB974\uCE68\uC744
+        \uAC70\uBD80\uD558\uACE0 \uC131\uB3C4\uB2E4\uC6B4 \uC0B6\uC744 \uAD8C\uBA74\uD558\uB294
+        \uC11C\uC2E0"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40582d0f14af64ae1992b58597691d4d, type: 3}
@@ -19462,7 +19503,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &669731363352419014
 MonoBehaviour:
   m_ObjectHideFlags: 0

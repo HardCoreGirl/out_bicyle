@@ -222,7 +222,7 @@ public class CGameData : MonoBehaviour
         m_listKeyMessage[4, 1] = "레위기: 하나님의 백성이 되는 과정";
         m_listKeyMessage[4, 2] = "민수기: 다음세대에게 신앙 전수";
         m_listKeyMessage[4, 3] = "여호수아: 하나님의 진정한 백성이 되기 위한 고군분투";
-        m_listKeyMessage[4, 4] = "사사기: 긴정한 왕을 찾아가는 여정";
+        m_listKeyMessage[4, 4] = "사사기: 진정한 왕을 찾아가는 여정";
         m_listKeyMessage[4, 5] = "룻기: 다윗을 통한 하나님의 본격적인 왕위 계승";
 
         m_listKeyMessage[5, 0] = "육신으로 이 땅에 오심";
@@ -231,7 +231,7 @@ public class CGameData : MonoBehaviour
 
         m_listKeyMessage[6, 0] = "이사야";
         m_listKeyMessage[6, 1] = "예레미야";
-        m_listKeyMessage[6, 2] = "예레미아야애가";
+        m_listKeyMessage[6, 2] = "예레미야애가";
         m_listKeyMessage[6, 3] = "에스겔";
         m_listKeyMessage[6, 4] = "다니엘";
 
@@ -308,7 +308,7 @@ public class CGameData : MonoBehaviour
 
     public int GetDistance(float fSpeed)
     {
-        return (int)(fSpeed * 60f);
+        return (int)(fSpeed * 49f);
     }
 
     public string GetKeyIndex(int nIndex)

@@ -213,7 +213,9 @@ public class CUIInGame : MonoBehaviour
         m_txtFinishGetKeyCnt.text = CGameEngine.Instance.GetKeyCount().ToString() + " / " + CGameData.Instance.GetStageKeyCount(CGameEngine.Instance.GetStage()).ToString();
         m_txtFinishPercent.text = "(" + ((int)((float)CGameEngine.Instance.GetKeyCount() / (float)CGameData.Instance.GetStageKeyCount(CGameEngine.Instance.GetStage()) * 100)).ToString() + "%)";
         m_txtFinishStage.text = "STAGE " + CGameData.Instance.GetStage().ToString() + " 결과";
-        m_txtFinishKeyCnt.text = "성경을 신학적으로 읽어야 하는\n" + CGameData.Instance.GetStageKeyCount(CGameData.Instance.GetStage()).ToString() + "가지 이유를 찾아라!";
+        //m_txtFinishKeyCnt.text = "성경을 신학적으로 읽어야 하는\n" + CGameData.Instance.GetStageKeyCount(CGameData.Instance.GetStage()).ToString() + "가지 이유를 찾아라!";
+
+        m_txtFinishKeyCnt.text = CGameData.Instance.GetStageMsg(CGameData.Instance.GetStage());
 
         HidePopupStage();
 
