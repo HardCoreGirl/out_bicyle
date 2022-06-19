@@ -126,7 +126,7 @@ public class CGameEngine : MonoBehaviour
         if( CGameData.Instance.AddPlayTime(Time.deltaTime) >= m_fStageTime )
         {
             CGameData.Instance.SetClearStage(CGameData.Instance.GetStage(), 1);
-            if( CGameData.Instance.GetStage() < 11  )
+            if( CGameData.Instance.GetStage() < 10  )
             {
                 if( CGameData.Instance.GetClearStage(CGameData.Instance.GetStage() + 1) < 0 ) 
                     CGameData.Instance.SetClearStage(CGameData.Instance.GetStage() + 1, 0);

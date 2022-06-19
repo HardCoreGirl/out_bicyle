@@ -144,7 +144,8 @@ public class CUILobby : MonoBehaviour
         m_goKeywordDetail.SetActive(true);
 
         int nStage = nIndex + 1;
-        m_txtKeywordDetailTitle.text = CGameData.Instance.GetStageTitle(nStage);
+        //m_txtKeywordDetailTitle.text = CGameData.Instance.GetStageTitle(nStage);
+        m_txtKeywordDetailTitle.text = CGameData.Instance.GetStageKeywordTitle(nStage);
         m_txtKeywordKeyCnt.text = CGameData.Instance.GetKeyCountInStage(nStage).ToString() + " / " + CGameData.Instance.GetStageKeyCount(nStage).ToString();
 
         for(int i = 0; i < m_listKeywordDetailKeyword.Length; i++)

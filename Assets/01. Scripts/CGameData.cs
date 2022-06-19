@@ -56,6 +56,7 @@ public class CGameData : MonoBehaviour
     private float[] m_listStageSpeed = new float[11];
 
     private string[] m_listStageTitle = new string[11];
+    private string[] m_listStageKeywordTitle = new string[11];
     private string[] m_listStageMsg = new string[11];
     private string[] m_listKeyIndex = new string[10];
     private string[,] m_listKeyMessage = new string[11, 10];
@@ -100,7 +101,7 @@ public class CGameData : MonoBehaviour
 
         m_bIsLoad = true;
 
-        SetStage(0);
+        SetStage(10);
 
         //SetStar(99999);
 
@@ -161,26 +162,46 @@ public class CGameData : MonoBehaviour
         m_listStageSpeed[10] = 10f;
 
         m_listStageTitle[0] = "튜토리얼";
+        m_listStageKeywordTitle[0] = "튜토리얼";
         m_listStageMsg[0] = "열쇠 4개 속에 숨겨진 슬로건을 찾아보세요";
         m_listStageTitle[1] = "Stage 1. 성경신학개론";
+        m_listStageKeywordTitle[1] = "S1. 성경을 신학적으로 읽어야 하는 6가지 이유";
         m_listStageMsg[1] = "성경을 신학적으로 읽어야 하는 6가지 이유를 찾아보세요";
         m_listStageTitle[2] = "Stage2. 창세기로 보는 구속사";
+        m_listStageKeywordTitle[2] = "S2. 하나님께서 명령하신 정복명령 5가지";
         m_listStageMsg[2] = "하나님께서 명령하신 정복명령 5가지는 무엇일까요?";
         m_listStageTitle[3] = "Stage3. 베리트, 하나님의 언약";
-        m_listStageMsg[3] = "하나님이 아브라함을 통해 메시아를 보내겠다는\n언약이 담긴 창세기 15:4을 완성하세요";
+        m_listStageKeywordTitle[3] = "S3. 무조건부 언약과 관련된 5가지 키워드";
+        //m_listStageMsg[3] = "하나님이 아브라함을 통해 메시아를 보내겠다는\n언약이 담긴 창세기 15:4을 완성하세요";
+        m_listStageMsg[3] = "무조건부 언약과 관련된 키워드들을 찾아보세요";
+
         m_listStageTitle[4] = "Stage4. 하나님의 왕권, 거룩한 계승";
-        m_listStageMsg[4] = "아담으로 시작된 하나님의 왕권 계승의 역사는 어떻게 될까요?";
+        m_listStageKeywordTitle[4] = "S4. 왕권 계승의 역사에 대한 성경 권별의 키워드";
+        //m_listStageMsg[4] = "아담으로 시작된 하나님의 왕권 계승의 역사는 어떻게 될까요?";
+        m_listStageMsg[4] = "하나님의 왕권 계승의 역사에 대한 성경 권별의 키워드를 찾아보세요";
+
         m_listStageTitle[5] = "Stage5. 지혜로우신 예수그리스도";
+        m_listStageKeywordTitle[5] = "S5. 우리를 구원하기 위한 하나님의 3가지 지혜";
         m_listStageMsg[5] = "우리를 구원하기 위한 하나님의 3가지 지혜를 찾아보세요";
+
         m_listStageTitle[6] = "Stage6. 이 시대의 선지자, 그리스도인";
+        m_listStageKeywordTitle[6] = "S6. 대선지서 5권은?";
         m_listStageMsg[6] = "분량이 많은 선지서를 대선지서라고 합니다.\n열쇠 속에 숨긴 대선지서 5권을 찾아보세요";
+
         m_listStageTitle[7] = "Stage7. 구속사의 정점, 메시아 공생애";
+        m_listStageKeywordTitle[7] = "S7. 4복음서의 수신자는?";
         m_listStageMsg[7] = "4복음서의 수신자는 누구일까요?";
+
         m_listStageTitle[8] = "Stage8. 성도의 참 위로자이신 예수님";
+        m_listStageKeywordTitle[8] = "S8. 옥중서신 4권과 그 특징은?";
         m_listStageMsg[8] = "바울이 감옥에서 쓴 서신을 옥중서신이라고 합니다.\n열쇠 속에 숨겨진 옥중서신 4권과 그 특징을 찾아보세요.";
+
         m_listStageTitle[9] = "Stage9. 반드시 다시 오실 예수님";
+        m_listStageKeywordTitle[9] = "S9. 초림을 먼저 알았던 사람들은?";
         m_listStageMsg[9] = "초림을 먼저 알았던 사람들은 누구일까요?";
+
         m_listStageTitle[10] = "Stage10. 말씀으로 담대하고 거침없이";
+        m_listStageKeywordTitle[10] = "S10. 담대하고 거침없는 삶은?";
         m_listStageMsg[10] = "담대하고 거침없이 산다는 것은 어떤 삶일까요?";
 
         m_listKeyIndex[0] = "첫번째 키워드";
@@ -212,11 +233,16 @@ public class CGameData : MonoBehaviour
         m_listKeyMessage[2, 3] = "정복하라";
         m_listKeyMessage[2, 4] = "다스려라";
 
-        m_listKeyMessage[3, 0] = "말씀";
-        m_listKeyMessage[3, 1] = "임하여";
-        m_listKeyMessage[3, 2] = "상속자";
-        m_listKeyMessage[3, 3] = "네 몸에서";
-        m_listKeyMessage[3, 4] = "상속자";
+        //m_listKeyMessage[3, 0] = "말씀";
+        //m_listKeyMessage[3, 1] = "임하여";
+        //m_listKeyMessage[3, 2] = "상속자";
+        //m_listKeyMessage[3, 3] = "네 몸에서";
+        //m_listKeyMessage[3, 4] = "상속자";
+        m_listKeyMessage[3, 0] = "하나님께서 거저 주시는 언약";
+        m_listKeyMessage[3, 1] = "용서 이상의 은혜";
+        m_listKeyMessage[3, 2] = "하나님이 베풀어주시는 무조건적인 사랑";
+        m_listKeyMessage[3, 3] = "하나님의 긍휼";
+        m_listKeyMessage[3, 4] = "예수님의 오심";
 
         m_listKeyMessage[4, 0] = "출애굽기: 제사장 나라 출범";
         m_listKeyMessage[4, 1] = "레위기: 하나님의 백성이 되는 과정";
@@ -324,6 +350,11 @@ public class CGameData : MonoBehaviour
     public string GetStageTitle(int nStage)
     {
         return m_listStageTitle[nStage];
+    }
+
+    public string GetStageKeywordTitle(int nStage)
+    {
+        return m_listStageKeywordTitle[nStage];
     }
 
     public string GetStageMsg(int nStage)

@@ -61,6 +61,9 @@ public class CUIInGame : MonoBehaviour
     public Text m_txtFinishKeyCnt;
     public Text m_txtFinishGetKeyCnt;
     public Text m_txtFinishPercent;
+    public GameObject m_goGetKeyIcon;
+    public GameObject m_goBtnKeyword;
+    public GameObject m_goBtnNextStage;
 
     public GameObject m_goPopupStage;
     public Text m_txtPopupStageTitle;
@@ -216,6 +219,28 @@ public class CUIInGame : MonoBehaviour
         //m_txtFinishKeyCnt.text = "성경을 신학적으로 읽어야 하는\n" + CGameData.Instance.GetStageKeyCount(CGameData.Instance.GetStage()).ToString() + "가지 이유를 찾아라!";
 
         m_txtFinishKeyCnt.text = CGameData.Instance.GetStageMsg(CGameData.Instance.GetStage());
+
+        if( CGameData.Instance.GetStage() == 0 )
+        {
+            m_goBtnKeyword.SetActive(false);
+            m_goGetKeyIcon.transform.localPosition = new Vector3(-140, 0, 0);
+        } else
+        {
+            m_goBtnKeyword.SetActive(true);
+            m_goGetKeyIcon.transform.localPosition = new Vector3(-240, 0, 0);
+
+            if (CGameData.Instance.GetStage() == 10)
+            {
+                m_goBtnNextStage.SetActive(false);
+            }
+            else
+            {
+                m_goBtnNextStage.SetActive(true);
+            }
+        }
+
+
+        
 
         HidePopupStage();
 
