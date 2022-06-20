@@ -83,6 +83,8 @@ public class CGameData : MonoBehaviour
     private bool m_bIsTutorialJump = false;
     private bool m_bIsTutorialKey = false;
 
+    private bool m_bIsSound = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -107,6 +109,11 @@ public class CGameData : MonoBehaviour
 
         
         m_nStar = PlayerPrefs.GetInt("Star", 0);
+
+        int nSound = PlayerPrefs.GetInt("Sound", 1);
+
+        if (nSound > 0)
+            m_bIsSound = true;
         
         string strKey = "";
         for(int i = 0; i < 11; i++)
@@ -542,6 +549,21 @@ public class CGameData : MonoBehaviour
         m_bIsTutorialGetStar = false;
         m_bIsTutorialJump = false;
         m_bIsTutorialKey = false;
+    }
+
+    public void SetSound(bool bIsSound)
+    {
+        m_bIsSound = bIsSound;
+
+        if(bIsSound)
+            PlayerPrefs.SetInt("Sound", 1);
+        else
+            PlayerPrefs.SetInt("Sound", 0);
+    }
+
+    public bool IsSound()
+    {
+        return m_bIsSound;
     }
 }
 

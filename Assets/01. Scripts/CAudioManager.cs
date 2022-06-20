@@ -61,51 +61,86 @@ public class CAudioManager : MonoBehaviour
 
     public void PlayGetKey()
     {
+        if (!CGameData.Instance.IsSound())
+            return;
+
         m_asGetKey.Play();
     }
 
     public void PlayGetStar()
     {
+        if (!CGameData.Instance.IsSound())
+            return;
+
         m_asGetStar.Play();
     }
 
     public void PlayGetShield()
     {
+        if (!CGameData.Instance.IsSound())
+            return;
+
         m_asGetShield.Play();
     }
 
     public void PlayGetHeart()
     {
+        if (!CGameData.Instance.IsSound())
+            return;
+
         m_asGetHeart.Play();
     }
 
     public void PlayWood()
     {
+        if (!CGameData.Instance.IsSound())
+            return;
+
         m_asWood.Play();
     }
 
     public void PlayWater()
     {
+        if (!CGameData.Instance.IsSound())
+            return;
+
         m_asWater.Play();
     }
 
     public void PlayJump()
     {
+        if (!CGameData.Instance.IsSound())
+            return;
+
         m_asJump.Play();
     }
 
     public void PlayButton()
     {
+        if (!CGameData.Instance.IsSound())
+            return;
+
         m_asButton.Play();
     }
 
     public void PlayBGLobby()
     {
+        if (!CGameData.Instance.IsSound())
+            return;
+
         m_asBGLobby.Play();
+    }
+
+    public void StopBGLobby()
+    {
+        m_asBGLobby.Stop();
     }
 
     public void PlayBGInGame()
     {
+        if (!CGameData.Instance.IsSound())
+            return;
+
         m_asBGInGame.Play();
     }
 }

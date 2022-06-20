@@ -179,6 +179,7 @@ public class CUIInGame : MonoBehaviour
         CGameData.Instance.SetState(2);
         CGameEngine.Instance.GetPlayer().GetComponent<CPlayer>().GameOver();
 
+        CGameData.Instance.SetLobbyIndex(1);
         SceneManager.LoadScene("Lobby");
     }
 

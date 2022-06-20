@@ -20,6 +20,8 @@ public class CUILobby : MonoBehaviour
     public Text m_txtStageTitle;
     public Text m_txtStageMsg;
 
+    public GameObject[] m_listSound = new GameObject[2];
+
     // Keyword ------------------------------
     public GameObject m_goKeywordMain;
     public GameObject[] m_listKeywordKey = new GameObject[10];
@@ -326,7 +328,19 @@ public class CUILobby : MonoBehaviour
 
         m_goUI[nIndex].SetActive(true);
 
-        if( nIndex == 1 )
+        if( nIndex == 0 )
+        {
+            if (CGameData.Instance.IsSound())
+            {
+                m_listSound[0].SetActive(true);
+                m_listSound[1].SetActive(false);
+            } else
+            {
+                m_listSound[0].SetActive(false);
+                m_listSound[1].SetActive(true);
+            }
+        }
+        else if( nIndex == 1 )
         {
             m_goPopupPlay.SetActive(false);
 
@@ -409,6 +423,24 @@ public class CUILobby : MonoBehaviour
             } else {
                 m_goLock[1].SetActive(false);
             }
+        }
+    }
+
+    public void OnClickSound(int nIndex)
+    {
+        if( nIndex == 0)
+        {
+            CAudioManager.Instance.PlayButton();
+            CAudioManager.Instance.StopBGLobby();
+            CGameData.Instance.SetSound(false);
+            m_listSound[0].SetActive(false);
+            m_listSound[1].SetActive(true);
+        } else
+        {
+            CGameData.Instance.SetSound(true);
+            CAudioManager.Instance.PlayBGLobby();
+            m_listSound[0].SetActive(true);
+            m_listSound[1].SetActive(false);
         }
     }
 
