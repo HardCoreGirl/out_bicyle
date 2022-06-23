@@ -5175,6 +5175,22 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 7333696494027198313}
+    - target: {fileID: 3034957137357967902, guid: e22d363fe3cba40609efda191c3de37e, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 358
+      objectReference: {fileID: 0}
+    - target: {fileID: 3034957137357967902, guid: e22d363fe3cba40609efda191c3de37e, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 266
+      objectReference: {fileID: 0}
+    - target: {fileID: 3034957137357967902, guid: e22d363fe3cba40609efda191c3de37e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 3034957137357967902, guid: e22d363fe3cba40609efda191c3de37e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.75
+      objectReference: {fileID: 0}
     - target: {fileID: 3054024144734598240, guid: e22d363fe3cba40609efda191c3de37e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -5185,7 +5201,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3287751003999288337, guid: e22d363fe3cba40609efda191c3de37e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3685003421875454528, guid: e22d363fe3cba40609efda191c3de37e, type: 3}
       propertyPath: m_Pivot.x
@@ -5310,6 +5326,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 7333696494027198313}
+    - target: {fileID: 8068137704161113468, guid: e22d363fe3cba40609efda191c3de37e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 40c2dabcfb5414083ad97c583a1a3c39, type: 3}
     - target: {fileID: 9029761252256650562, guid: e22d363fe3cba40609efda191c3de37e, type: 3}
       propertyPath: m_SizeDelta.x
       value: 1200
