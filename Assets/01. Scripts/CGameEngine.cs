@@ -44,7 +44,7 @@ public class CGameEngine : MonoBehaviour
 
     public GameObject m_goRoadParents;
 
-    public GameObject[] m_listStageRoad = new GameObject[12];
+    public GameObject[] m_listStageRoad = new GameObject[16];
     public GameObject[] m_listBG = new GameObject[3];
 
 
